@@ -411,6 +411,8 @@ document.write(`
   <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Library berhasil di-import!"</span><span class="p">)</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Library berhasil di-import!
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
     <span class="s2">"dataset_detik.csv"</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="s2">";"</span><span class="p">,</span>
@@ -422,6 +424,15 @@ document.write(`
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kolom:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
 
   <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span></pre></div></div></div>
+    <div class="cell_output docutils container">
+    <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset berhasil dibaca!
+  Jumlah data: 200
+  Jumlah kolom: 3
+  </pre></div></div>
+    <p>Preview dataset (5 baris):</p>
+    <table border="1" class="dataframe"><thead><tr><th></th><th>id</th><th>label</th></tr></thead><tbody>
+    <tr><th>0</th><td>1</td><td>sport</td></tr><tr><th>1</th><td>2</td><td>sport</td></tr><tr><th>2</th><td>3</td><td>sport</td></tr><tr><th>3</th><td>4</td><td>sport</td></tr><tr><th>4</th><td>5</td><td>sport</td></tr>
+    </tbody></table></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Contoh berita sebelum preprocessing:\\n"</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
@@ -430,6 +441,25 @@ document.write(`
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"\\nDistribusi label:"</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh berita sebelum preprocessing:
+
+  Ciamis - Sebanyak 549 siswa dari 40 SD mengikuti lomba olahraga tradisional di Ciamis, Jawa Barat, dengan penuh semangat.
+  Sejumlah peserta beradu cepat dalam lomba olahraga tradisional (Oltrad) egrang di Lapang Cigorowong, Kabupaten Ciamis, Jawa Barat, Rabu (16/9/2026). Para siswa beradu kemampuan dalam lima cabang olahraga tradisional, yakni hadang, terompah panjang, dagongan, sumpitan, dan egrang. Setiap pertandingan menghadirkan keseruan sekaligus mengajak peserta mengenal permainan tradisional. ANTARA FOTO/Adeng Bustomi
+  Salah satu perlombaan yang menarik perhatian adalah dagongan. Dalam pertandingan tersebut, peserta saling mendorong batang bambu dengan mengandalkan kekuatan, keseimbangan, dan kerja sama tim. ANTARA FOTO/Adeng Bustomi
+  Kejuaraan olahraga tradisional tersebut menjadi sarana edukasi bagi siswa sekaligus bagian dari upaya melestarikan budaya. Melalui kegiatan ini, olahraga tradisional dikenalkan kepada generasi muda agar tetap dimainkan dan tidak hilang di tengah perkembangan zaman. ANTARA FOTO/Adeng Bustomi
+
+  Panjang teks berita pertama:
+  1040
+
+  Distribusi label:
+  label
+  sport      100
+  finance    100
+  Name: count, dtype: int64
+  </pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Package stopwords is already up-to-date!
+  True
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">"stopwords"</span><span class="p">)</span></pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">"indonesian"</span><span class="p">))</span>
 
@@ -438,6 +468,9 @@ document.write(`
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah stopword:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">stop_words</span><span class="p">))</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Stemmer Bahasa Indonesia berhasil dibuat!"</span><span class="p">)</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah stopword: 757
+  Stemmer Bahasa Indonesia berhasil dibuat!
+  </pre></div></div></div>
   </section>
   <section id="preprocessing-teks">
   <h2>Preprocessing Teks<a class="headerlink" href="#preprocessing-teks" title="Link to this heading">#</a></h2>
@@ -470,10 +503,22 @@ document.write(`
     <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Fungsi preprocessing berhasil dibuat!"</span><span class="p">)</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fungsi preprocessing berhasil dibuat!
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"teks_preprocessed"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocessing_teks</span><span class="p">)</span>
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Preprocessing selesai!"</span><span class="p">)</span>
   <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"isi_berita"</span><span class="p">,</span> <span class="s2">"teks_preprocessed"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span></pre></div></div></div>
+    <div class="cell_output docutils container">
+    <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Preprocessing selesai!
+  </pre></div></div>
+    <table border="1" class="dataframe"><thead><tr><th></th><th>id</th><th>teks_preprocessed</th><th>label</th></tr></thead><tbody>
+    <tr><th>0</th><td>1</td><td>ciamis siswa sd ikut lomba olahraga tradisiona...</td><td>sport</td></tr>
+    <tr><th>1</th><td>2</td><td>seri motogp marc marquez sukses sapu bersih po...</td><td>sport</td></tr>
+    <tr><th>2</th><td>3</td><td>alwi farhan moh zaki ubaidillah muhamad yusuf ...</td><td>sport</td></tr>
+    <tr><th>3</th><td>4</td><td>viral insiden cepirit ajang hyrox atlet malays...</td><td>sport</td></tr>
+    <tr><th>4</th><td>5</td><td>dejan fedinansyah felisha alberta nathaniel pa...</td><td>sport</td></tr>
+    </tbody></table></div>
   </section>
   <section id="ekstraksi-fitur-tfidf">
   <h2>Ekstraksi Fitur TF-IDF<a class="headerlink" href="#ekstraksi-fitur-tfidf" title="Link to this heading">#</a></h2>
@@ -485,6 +530,10 @@ document.write(`
   <span class="nb">print</span><span class="p">(</span><span class="s2">"TF-IDF berhasil dibuat!"</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah dokumen :"</span><span class="p">,</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah fitur/kata unik :"</span><span class="p">,</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TF-IDF berhasil dibuat!
+  Jumlah dokumen : 200
+  Jumlah fitur/kata unik : 5068
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_dense</span> <span class="o">=</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 
   <span class="n">nama_kata</span> <span class="o">=</span> <span class="p">[</span>
@@ -501,6 +550,9 @@ document.write(`
 
   <span class="k">assert</span> <span class="n">tfidf_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_unique</span><span class="p">,</span> <span class="s2">"Ada nama kolom ganda di tfidf_df!"</span>
   <span class="n">display</span><span class="p">(</span><span class="n">tfidf_df</span><span class="p">)</span></pre></div></div></div>
+    <div class="cell_output docutils container"><p>DataFrame TF-IDF: 200 baris × 5070 kolom (5068 fitur kata, ditambah kolom id dan label).</p></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: hasil_tfidf.csv (200 baris x 5070 kolom, 4,342 KB)
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
   <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">FileLink</span><span class="p">,</span> <span class="n">display</span>
 
@@ -523,6 +575,12 @@ document.write(`
 
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah seluruh kata unik:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitur_kata</span><span class="p">))</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">fitur_kata</span><span class="p">[:</span><span class="mi">200</span><span class="p">])</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah seluruh kata unik: 5068
+  ['aaa' 'aau' 'ab' 'abad' 'abadi' 'abai' 'abal' 'abdullah' 'abdurrahkman'
+   'abet' 'abha' 'abraham' 'abrahham' 'absen' 'absorber' 'abu' 'academy'
+   'acara' 'accelerating' 'acceptance' 'access' 'accessories' 'accident'
+   ...]
+  </pre></div></div></div>
   </section>
   <section id="reduksi-dimensi-pca">
   <h2>Reduksi Dimensi PCA<a class="headerlink" href="#reduksi-dimensi-pca" title="Link to this heading">#</a></h2>
@@ -537,6 +595,15 @@ document.write(`
   <span class="nb">print</span><span class="p">(</span><span class="s2">"\\nJumlah komponen PCA :"</span><span class="p">,</span> <span class="n">pca</span><span class="o">.</span><span class="n">n_components_</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">"\\nTotal Explained Variance:"</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span></pre></div></div></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PCA berhasil dilakukan!
+  Ukuran data sebelum PCA : (200, 5068)
+  Ukuran data setelah PCA : (200, 138)
+
+  Jumlah komponen PCA : 138
+
+  Total Explained Variance:
+  0.9006656356057265
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">pca_columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tfidf_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
   <span class="n">df_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pca_columns</span><span class="p">)</span>
 
@@ -546,6 +613,19 @@ document.write(`
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Data hasil PCA:"</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">"Ukuran data PCA :"</span><span class="p">,</span> <span class="n">df_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
   <span class="n">display</span><span class="p">(</span><span class="n">df_pca</span><span class="o">.</span><span class="n">head</span><span class="p">())</span></pre></div></div></div>
+    <div class="cell_output docutils container">
+    <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data hasil PCA:
+  Ukuran data PCA : (200, 140)
+  </pre></div></div>
+    <table border="1" class="dataframe"><thead><tr><th></th><th>id</th><th>PC1</th><th>PC2</th><th>label</th></tr></thead><tbody>
+    <tr><th>0</th><td>1</td><td>-0.051591</td><td>-0.084691</td><td>sport</td></tr>
+    <tr><th>1</th><td>2</td><td>0.476904</td><td>0.043411</td><td>sport</td></tr>
+    <tr><th>2</th><td>3</td><td>-0.090811</td><td>-0.309354</td><td>sport</td></tr>
+    <tr><th>3</th><td>4</td><td>-0.035140</td><td>-0.060473</td><td>sport</td></tr>
+    <tr><th>4</th><td>5</td><td>-0.096657</td><td>-0.327272</td><td>sport</td></tr>
+    </tbody></table></div>
+    <div class="cell_output docutils container"><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tersimpan: hasil_pca.csv (200 baris x 140 kolom, 567 KB)
+  </pre></div></div></div>
   <div class="cell docutils container"><div class="cell_input docutils container"><div class="highlight-ipython3 notranslate"><pre><span></span><span class="n">simpan_dan_unduh</span><span class="p">(</span><span class="n">df_pca</span><span class="p">,</span> <span class="s2">"hasil_pca.csv"</span><span class="p">)</span></pre></div></div></div>
   </section>
   <section id="visualisasi-pca">
