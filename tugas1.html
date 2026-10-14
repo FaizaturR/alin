@@ -784,6 +784,7 @@
                                 }
                                 .notebook-output-row {
                                     display: grid;
+                                    grid-column: 1 / -1;
                                     grid-template-columns: 5.5rem minmax(0, 1fr);
                                     gap: 0.5rem;
                                     margin-top: 0.35rem;
@@ -810,6 +811,12 @@
                                     border: 0;
                                     border-bottom: 1px solid #ddd;
                                     text-align: left;
+                                }
+                                .notebook-output .dataframe thead {
+                                    border-bottom: 2px solid #bbb;
+                                }
+                                .notebook-output .dataframe tbody tr:nth-child(even) {
+                                    background: #f5f5f5;
                                 }
                                 @media (max-width: 600px) {
                                     .notebook-cell,
@@ -859,6 +866,9 @@
                                                     return;
                                                 }
                                                 const safeElement = document.createElement(node.tagName.toLowerCase());
+                                                if (node.tagName === "TABLE" && node.classList.contains("dataframe")) {
+                                                    safeElement.classList.add("dataframe");
+                                                }
                                                 target.appendChild(safeElement);
                                                 node.childNodes.forEach(child => copyNode(child, safeElement));
                                             }
