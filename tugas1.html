@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Web Scraping Berita Detik — Crawling dan Scraping Data</title>
+<title>Web Scraping Berita Detik — Web Scraping Berita Detik — Crawling dan Scraping Data</title>
 <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -217,7 +217,7 @@ document.write(`
 </div>
 </div>
 <div id="searchbox"></div>
-<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="web-scraping-berita-detik"><h1>Web Scraping Berita Detik</h1><p>Halaman ini mengikuti isi notebook <code>crawling.ipynb</code>. Prosesnya meliputi persiapan library, crawling URL artikel dari kategori Sport dan Finance, scraping isi berita, penggabungan data, dan penyimpanan dataset.</p><div class="admonition note"><p class="admonition-title">Ringkasan alur</p><p>Target pengumpulan adalah maksimal 100 artikel Sport dan 100 artikel Finance. Jumlah artikel yang benar-benar tersimpan bergantung pada keberhasilan pengambilan isi artikel saat notebook dijalankan.</p></div><section id="langkah-1"><h2>Instalasi Library<a class="headerlink" href="#langkah-1" title="Link to this heading">#</a></h2><p>Memasang library yang digunakan untuk mengakses halaman web, membaca struktur HTML, mengekstrak isi artikel, dan mengolah data.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install requests beautifulsoup4 trafilatura pandas</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Requirement already satisfied: requests in .\enwebmining\lib\site-packages (2.34.2)
+<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="web-scraping-berita-detik"><h1>Web Scraping Berita Detik</h1><p>Konten halaman ini dibuat otomatis dari file notebook <code>crawling.ipynb</code>. Untuk memperbarui halaman, edit atau jalankan notebook lalu jalankan kembali <code>python generate_pages.py</code>.</p><section id="bagian-1"><h2>Sel Kode 1<a class="headerlink" href="#bagian-1" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install requests beautifulsoup4 trafilatura pandas</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Requirement already satisfied: requests in .\enwebmining\lib\site-packages (2.34.2)
 Requirement already satisfied: beautifulsoup4 in .\enwebmining\lib\site-packages (4.15.0)
 Requirement already satisfied: trafilatura in .\enwebmining\lib\site-packages (2.2.0)
 Requirement already satisfied: pandas in .\enwebmining\lib\site-packages (2.3.3)
@@ -241,66 +241,70 @@ Requirement already satisfied: dateparser&gt;=1.1.2 in .\enwebmining\lib\site-pa
 Requirement already satisfied: regex&gt;=2024.9.11 in .\enwebmining\lib\site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (2026.9.10)
 Requirement already satisfied: tzlocal&gt;=0.2 in .\enwebmining\lib\site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (5.4.4)
 Requirement already satisfied: lxml_html_clean in .\enwebmining\lib\site-packages (from lxml[html_clean]&gt;=4.4.2-&gt;justext&gt;=3.0.2-&gt;trafilatura) (0.4.5)
-Requirement already satisfied: six&gt;=1.5 in .\enwebmining\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)</pre></details></section><section id="langkah-2"><h2>Import Library<a class="headerlink" href="#langkah-2" title="Link to this heading">#</a></h2><p>Mengimpor library yang digunakan selama proses crawling dan scraping.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+Requirement already satisfied: six&gt;=1.5 in .\enwebmining\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)</pre></details></section>
+<section id="bagian-2"><h2>Sel Kode 2<a class="headerlink" href="#bagian-2" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
 from bs4 import BeautifulSoup
 import trafilatura
 import pandas as pd
 
-print("Semua library berhasil di-import!")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Semua library berhasil di-import!</pre></details></section><section id="langkah-3"><h2>Mengakses Halaman Sport Detik<a class="headerlink" href="#langkah-3" title="Link to this heading">#</a></h2><p>Memeriksa apakah halaman utama Sport Detik dapat diakses melalui requests.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = "https://sport.detik.com/"
+print(&quot;Semua library berhasil di-import!&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Semua library berhasil di-import!</pre></details></section>
+<section id="bagian-3"><h2>Sel Kode 3<a class="headerlink" href="#bagian-3" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = &quot;https://sport.detik.com/&quot;
 
 response = requests.get(
     url,
     headers={
-        "User-Agent": "Mozilla/5.0"
+        &quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;
     }
 )
 
-print("Status code:", response.status_code)
-print("Panjang halaman:", len(response.text))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status code: 200
-Panjang halaman: 276914</pre></details></section><section id="langkah-4"><h2>Membaca Struktur HTML Halaman Sport<a class="headerlink" href="#langkah-4" title="Link to this heading">#</a></h2><p>Mengambil respons halaman dan mengubah HTML menjadi objek BeautifulSoup.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+print(&quot;Status code:&quot;, response.status_code)
+print(&quot;Panjang halaman:&quot;, len(response.text))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Status code: 200
+Panjang halaman: 276914</pre></details></section>
+<section id="bagian-4"><h2>Sel Kode 4<a class="headerlink" href="#bagian-4" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
 from bs4 import BeautifulSoup
 
-url = "https://sport.detik.com/"
+url = &quot;https://sport.detik.com/&quot;
 
 headers = {
-    "User-Agent": "Mozilla/5.0"
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;
 }
 
 response = requests.get(url, headers=headers)
 
-print("Status:", response.status_code)
+print(&quot;Status:&quot;, response.status_code)
 
-soup = BeautifulSoup(response.text, "html.parser")
+soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
 
-print("Soup berhasil dibuat")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status: 200
-Soup berhasil dibuat</pre></details></section><section id="langkah-5"><h2>Menelusuri Link dari Halaman Sport<a class="headerlink" href="#langkah-5" title="Link to this heading">#</a></h2><p>Mengambil link pada domain Sport Detik dan menyaring sebagian halaman navigasi.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from urllib.parse import urljoin, urlparse
+print(&quot;Soup berhasil dibuat&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Status: 200
+Soup berhasil dibuat</pre></details></section>
+<section id="bagian-5"><h2>Hanya mengambil link yang berasal dari sport.detik.com<a class="headerlink" href="#bagian-5" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from urllib.parse import urljoin, urlparse
 
 links_sport = []
 
-for a in soup.find_all("a", href=True):
-    href = urljoin("https://sport.detik.com/", a["href"])
+for a in soup.find_all(&quot;a&quot;, href=True):
+    href = urljoin(&quot;https://sport.detik.com/&quot;, a[&quot;href&quot;])
     parsed = urlparse(href)
 
     # Hanya mengambil link yang berasal dari sport.detik.com
-    if parsed.netloc == "sport.detik.com":
+    if parsed.netloc == &quot;sport.detik.com&quot;:
         path = parsed.path
 
         # Hindari halaman utama, indeks, kategori, dan halaman navigasi
         if (
-            path not in ["/", "/indeks", "/index", "/index/"]
-            and "/indeks" not in path
-            and "/index" not in path
-            and not path.startswith("/tag/")
+            path not in [&quot;/&quot;, &quot;/indeks&quot;, &quot;/index&quot;, &quot;/index/&quot;]
+            and &quot;/indeks&quot; not in path
+            and &quot;/index&quot; not in path
+            and not path.startswith(&quot;/tag/&quot;)
         ):
             links_sport.append(href)
 
 # Hilangkan duplikat
 links_sport = list(dict.fromkeys(links_sport))
 
-print("Jumlah link ditemukan:", len(links_sport))
+print(&quot;Jumlah link ditemukan:&quot;, len(links_sport))
 
 for link in links_sport[:10]:
-    print(link)</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah link ditemukan: 67
+    print(link)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah link ditemukan: 67
 https://sport.detik.com/sepakbola
 https://sport.detik.com
 https://sport.detik.com/moto-gp
@@ -310,22 +314,23 @@ https://sport.detik.com/basket
 https://sport.detik.com/sportstyle
 https://sport.detik.com/sport-lain
 https://sport.detik.com/foto
-https://sport.detik.com/video</pre></details></section><section id="langkah-6"><h2>Memfilter Link Artikel Sport<a class="headerlink" href="#langkah-6" title="Link to this heading">#</a></h2><p>Menyaring URL artikel yang memiliki pola /d- pada URL Detik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_sport = []
+https://sport.detik.com/video</pre></details></section>
+<section id="bagian-6"><h2>Artikel Detik biasanya memiliki /d- pada URL<a class="headerlink" href="#bagian-6" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_sport = []
 
-for a in soup.find_all("a", href=True):
-    href = urljoin("https://sport.detik.com/", a["href"])
+for a in soup.find_all(&quot;a&quot;, href=True):
+    href = urljoin(&quot;https://sport.detik.com/&quot;, a[&quot;href&quot;])
 
     # Artikel Detik biasanya memiliki /d- pada URL
-    if "sport.detik.com" in href and "/d-" in href:
+    if &quot;sport.detik.com&quot; in href and &quot;/d-&quot; in href:
         links_sport.append(href)
 
 # Hilangkan duplikat
 links_sport = list(dict.fromkeys(links_sport))
 
-print("Jumlah link artikel Sport:", len(links_sport))
+print(&quot;Jumlah link artikel Sport:&quot;, len(links_sport))
 
 for link in links_sport[:10]:
-    print(link)</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah link artikel Sport: 51
+    print(link)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah link artikel Sport: 51
 https://sport.detik.com/moto-gp/d-8663795/marc-marquez-akui-dapat-kado-manis-dari-rival-rivalnya
 https://sport.detik.com/sport-lain/d-8664208/eko-yuli-masih-incar-tiket-olimpiade-la-2028
 https://sport.detik.com/moto-gp/d-8664759/mau-kompetitif-lagi-kenapa-quartararo-tak-coba-dapatkan-motor-ducati
@@ -335,7 +340,8 @@ https://sport.detik.com/fotosport/d-8665222/serunya-549-siswa-di-ciamis-adu-keta
 https://sport.detik.com/sepakbola/liga-spanyol/d-8665696/nilai-7-untuk-emil-audero
 https://sport.detik.com/sepakbola/liga-indonesia/d-8665937/sikat-fc-seoul-persib-bandung-bikin-sejarah-di-negeri-gingseng
 https://sport.detik.com/sepakbola/liga-indonesia/d-8665639/indonesia-vs-thailand-difavoritkan-jadi-final-fifa-asean-cup-2026
-https://sport.detik.com/sepakbola/liga-indonesia/d-8665806/persija-pindah-kandang-vs-java-united-tidak-dihukum-pengurangan-poin</pre></details></section><section id="langkah-7"><h2>Crawling 100 Link Artikel Sport<a class="headerlink" href="#langkah-7" title="Link to this heading">#</a></h2><p>Mengunjungi halaman indeks Sport secara bertahap sampai terkumpul target 100 URL unik atau halaman yang tersedia habis.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+https://sport.detik.com/sepakbola/liga-indonesia/d-8665806/persija-pindah-kandang-vs-java-united-tidak-dihukum-pengurangan-poin</pre></details></section>
+<section id="bagian-7"><h2>Hilangkan duplikat<a class="headerlink" href="#bagian-7" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import time
@@ -344,27 +350,27 @@ def ambil_link_sport(target=100):
     links = []
 
     for halaman in range(1, 10):
-        url = f"https://sport.detik.com/indeks?page={halaman}"
+        url = f&quot;https://sport.detik.com/indeks?page={halaman}&quot;
 
         response = requests.get(
             url,
-            headers={"User-Agent": "Mozilla/5.0"}
+            headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;}
         )
 
-        print(f"Mengambil halaman {halaman} - Status: {response.status_code}")
+        print(f&quot;Mengambil halaman {halaman} - Status: {response.status_code}&quot;)
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
 
-        for a in soup.find_all("a", href=True):
-            href = urljoin("https://sport.detik.com/", a["href"])
+        for a in soup.find_all(&quot;a&quot;, href=True):
+            href = urljoin(&quot;https://sport.detik.com/&quot;, a[&quot;href&quot;])
 
-            if "sport.detik.com" in href and "/d-" in href:
+            if &quot;sport.detik.com&quot; in href and &quot;/d-&quot; in href:
                 links.append(href)
 
         # Hilangkan duplikat
         links = list(dict.fromkeys(links))
 
-        print(f"Total link unik: {len(links)}")
+        print(f&quot;Total link unik: {len(links)}&quot;)
 
         if len(links) &gt;= target:
             break
@@ -376,7 +382,7 @@ def ambil_link_sport(target=100):
 
 links_sport = ambil_link_sport(100)
 
-print("\nJumlah link Sport yang dikumpulkan:", len(links_sport))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
+print(&quot;\nJumlah link Sport yang dikumpulkan:&quot;, len(links_sport))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
 Total link unik: 20
 Mengambil halaman 2 - Status: 200
 Total link unik: 39
@@ -389,7 +395,8 @@ Total link unik: 97
 Mengambil halaman 6 - Status: 200
 Total link unik: 117
 
-Jumlah link Sport yang dikumpulkan: 100</pre></details></section><section id="langkah-8"><h2>Scraping Isi Berita Sport<a class="headerlink" href="#langkah-8" title="Link to this heading">#</a></h2><p>Menggunakan Trafilatura untuk mengambil teks artikel. Setiap artikel yang berhasil disimpan dengan label sport.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import trafilatura
+Jumlah link Sport yang dikumpulkan: 100</pre></details></section>
+<section id="bagian-8"><h2>Sel Kode 8<a class="headerlink" href="#bagian-8" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import trafilatura
 import time
 
 data_sport = []
@@ -401,20 +408,20 @@ for i, url in enumerate(links_sport, start=1):
 
         if isi:
             data_sport.append({
-                "isi_berita": isi,
-                "label": "sport"
+                &quot;isi_berita&quot;: isi,
+                &quot;label&quot;: &quot;sport&quot;
             })
 
-            print(f"{i}/100 berhasil")
+            print(f&quot;{i}/100 berhasil&quot;)
         else:
-            print(f"{i}/100 gagal mengambil isi")
+            print(f&quot;{i}/100 gagal mengambil isi&quot;)
 
     except Exception as e:
-        print(f"{i}/100 error: {e}")
+        print(f&quot;{i}/100 error: {e}&quot;)
 
     time.sleep(1)
 
-print("\nTotal berita Sport berhasil:", len(data_sport))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
+print(&quot;\nTotal berita Sport berhasil:&quot;, len(data_sport))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
 2/100 berhasil
 3/100 berhasil
 4/100 berhasil
@@ -515,42 +522,44 @@ print("\nTotal berita Sport berhasil:", len(data_sport))</pre></div></div><detai
 99/100 berhasil
 100/100 berhasil
 
-Total berita Sport berhasil: 100</pre></details></section><section id="langkah-9"><h2>Memeriksa Halaman Finance Detik<a class="headerlink" href="#langkah-9" title="Link to this heading">#</a></h2><p>Memeriksa akses ke halaman utama Finance Detik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = "https://finance.detik.com/"
+Total berita Sport berhasil: 100</pre></details></section>
+<section id="bagian-9"><h2>Sel Kode 9<a class="headerlink" href="#bagian-9" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = &quot;https://finance.detik.com/&quot;
 
 response_finance = requests.get(
     url,
     headers={
-        "User-Agent": "Mozilla/5.0"
+        &quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;
     }
 )
 
-print("Status code:", response_finance.status_code)
-print("Panjang halaman:", len(response_finance.text))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status code: 200
-Panjang halaman: 354383</pre></details></section><section id="langkah-10"><h2>Crawling 100 Link Artikel Finance<a class="headerlink" href="#langkah-10" title="Link to this heading">#</a></h2><p>Mengambil URL artikel Finance dari halaman indeks dan membatasi hasil menjadi maksimal 100 link unik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_finance = []
+print(&quot;Status code:&quot;, response_finance.status_code)
+print(&quot;Panjang halaman:&quot;, len(response_finance.text))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Status code: 200
+Panjang halaman: 354383</pre></details></section>
+<section id="bagian-10"><h2>Mengambil URL artikel Finance<a class="headerlink" href="#bagian-10" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_finance = []
 
 for halaman in range(1, 10):
-    url = f"https://finance.detik.com/indeks?page={halaman}"
+    url = f&quot;https://finance.detik.com/indeks?page={halaman}&quot;
 
     response = requests.get(
         url,
-        headers={"User-Agent": "Mozilla/5.0"}
+        headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;}
     )
 
-    print(f"Mengambil halaman {halaman} - Status: {response.status_code}")
+    print(f&quot;Mengambil halaman {halaman} - Status: {response.status_code}&quot;)
 
-    soup_finance = BeautifulSoup(response.text, "html.parser")
+    soup_finance = BeautifulSoup(response.text, &quot;html.parser&quot;)
 
-    for a in soup_finance.find_all("a", href=True):
-        href = urljoin("https://finance.detik.com/", a["href"])
+    for a in soup_finance.find_all(&quot;a&quot;, href=True):
+        href = urljoin(&quot;https://finance.detik.com/&quot;, a[&quot;href&quot;])
 
         # Mengambil URL artikel Finance
-        if "finance.detik.com" in href and "/d-" in href:
+        if &quot;finance.detik.com&quot; in href and &quot;/d-&quot; in href:
             links_finance.append(href)
 
     # Hilangkan duplikat
     links_finance = list(dict.fromkeys(links_finance))
 
-    print(f"Total link unik: {len(links_finance)}")
+    print(f&quot;Total link unik: {len(links_finance)}&quot;)
 
     if len(links_finance) &gt;= 100:
         break
@@ -559,7 +568,7 @@ for halaman in range(1, 10):
 
 links_finance = links_finance[:100]
 
-print("\nJumlah link Finance yang dikumpulkan:", len(links_finance))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
+print(&quot;\nJumlah link Finance yang dikumpulkan:&quot;, len(links_finance))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
 Total link unik: 16
 Mengambil halaman 2 - Status: 200
 Total link unik: 35
@@ -572,7 +581,8 @@ Total link unik: 91
 Mengambil halaman 6 - Status: 200
 Total link unik: 110
 
-Jumlah link Finance yang dikumpulkan: 100</pre></details></section><section id="langkah-11"><h2>Scraping Isi Berita Finance<a class="headerlink" href="#langkah-11" title="Link to this heading">#</a></h2><p>Menggunakan Trafilatura untuk mengekstrak teks artikel Finance dan memberi label finance.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>data_finance = []
+Jumlah link Finance yang dikumpulkan: 100</pre></details></section>
+<section id="bagian-11"><h2>Sel Kode 11<a class="headerlink" href="#bagian-11" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>data_finance = []
 
 for i, url in enumerate(links_finance, start=1):
     try:
@@ -581,20 +591,20 @@ for i, url in enumerate(links_finance, start=1):
 
         if isi:
             data_finance.append({
-                "isi_berita": isi,
-                "label": "finance"
+                &quot;isi_berita&quot;: isi,
+                &quot;label&quot;: &quot;finance&quot;
             })
 
-            print(f"{i}/100 berhasil")
+            print(f&quot;{i}/100 berhasil&quot;)
         else:
-            print(f"{i}/100 gagal mengambil isi")
+            print(f&quot;{i}/100 gagal mengambil isi&quot;)
 
     except Exception as e:
-        print(f"{i}/100 error: {e}")
+        print(f&quot;{i}/100 error: {e}&quot;)
 
     time.sleep(1)
 
-print("\nTotal berita Finance berhasil:", len(data_finance))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
+print(&quot;\nTotal berita Finance berhasil:&quot;, len(data_finance))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
 2/100 berhasil
 3/100 berhasil
 4/100 berhasil
@@ -695,29 +705,30 @@ print("\nTotal berita Finance berhasil:", len(data_finance))</pre></div></div><d
 99/100 berhasil
 100/100 berhasil
 
-Total berita Finance berhasil: 100</pre></details></section><section id="langkah-12"><h2>Menggabungkan Data Sport dan Finance<a class="headerlink" href="#langkah-12" title="Link to this heading">#</a></h2><p>Menggabungkan hasil scraping kedua kategori menjadi satu DataFrame, menambahkan kolom ID, lalu melihat contoh data.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Gabungkan data Sport dan Finance
+Total berita Finance berhasil: 100</pre></details></section>
+<section id="bagian-12"><h2>Gabungkan data Sport dan Finance<a class="headerlink" href="#bagian-12" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Gabungkan data Sport dan Finance
 data_semua = data_sport + data_finance
 
 # Buat DataFrame
 df = pd.DataFrame(data_semua)
 
 # Tambahkan ID dari 1 sampai 200
-df.insert(0, "id", range(1, len(df) + 1))
+df.insert(0, &quot;id&quot;, range(1, len(df) + 1))
 
 # Tampilkan informasi dataset
-print("Jumlah total data:", len(df))
-print("\nJumlah berdasarkan label:")
-print(df["label"].value_counts())
+print(&quot;Jumlah total data:&quot;, len(df))
+print(&quot;\nJumlah berdasarkan label:&quot;)
+print(df[&quot;label&quot;].value_counts())
 
 # Tampilkan 5 data pertama
-display(df.head())</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah total data: 200
+display(df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah total data: 200
 
 Jumlah berdasarkan label:
 label
 sport      100
 finance    100
-Name: count, dtype: int64</pre><div class="notebook-table"><div>
-<style scoped="">
+Name: count, dtype: int64</pre></details><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -731,66 +742,63 @@ Name: count, dtype: int64</pre><div class="notebook-table"><div>
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>id</th>
-<th>isi_berita</th>
-<th>label</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>1</td>
-<td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
-<td>sport</td>
-</tr>
-<tr>
-<th>1</th>
-<td>2</td>
-<td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
-<td>sport</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
-<td>sport</td>
-</tr>
-<tr>
-<th>3</th>
-<td>4</td>
-<td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
-<td>sport</td>
-</tr>
-<tr>
-<th>4</th>
-<td>5</td>
-<td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
-<td>sport</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
 </table>
-</div></div><details><summary>Output teks</summary><pre>   id                                         isi_berita  label
-0   1  Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...  sport
-1   2  Dalam dua seri terakhir MotoGP 2027, Marc Marq...  sport
-2   3  Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...  sport
-3   4  Di tengah viral insiden cepirit pada ajang Hyr...  sport
-4   5  Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...  sport</pre></details></details></section><section id="langkah-13"><h2>Menyimpan Dataset ke CSV<a class="headerlink" href="#langkah-13" title="Link to this heading">#</a></h2><p>Menyimpan hasil penggabungan ke file dataset_detik.csv dengan pemisah titik koma dan encoding utf-8-sig.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df.to_csv(
-    "dataset_detik.csv",
+</div></div></details></section>
+<section id="bagian-13"><h2>Sel Kode 13<a class="headerlink" href="#bagian-13" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df.to_csv(
+    &quot;dataset_detik.csv&quot;,
     index=False,
-    sep=";",
-    encoding="utf-8-sig"
+    sep=&quot;;&quot;,
+    encoding=&quot;utf-8-sig&quot;
 )
 
-print("Dataset berhasil disimpan sebagai dataset_detik.csv")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Dataset berhasil disimpan sebagai dataset_detik.csv</pre></details></section><section id="langkah-14"><h2>Memeriksa Dataset Akhir<a class="headerlink" href="#langkah-14" title="Link to this heading">#</a></h2><p>Memeriksa jumlah baris dan kolom, nilai kosong, serta distribusi label pada dataset.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>print("Jumlah baris:", len(df))
-print("Jumlah kolom:", len(df.columns))
-print("\nData kosong:")
+print(&quot;Dataset berhasil disimpan sebagai dataset_detik.csv&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Dataset berhasil disimpan sebagai dataset_detik.csv</pre></details></section>
+<section id="bagian-14"><h2>Sel Kode 14<a class="headerlink" href="#bagian-14" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>print(&quot;Jumlah baris:&quot;, len(df))
+print(&quot;Jumlah kolom:&quot;, len(df.columns))
+print(&quot;\nData kosong:&quot;)
 print(df.isnull().sum())
 
-print("\nDistribusi label:")
-print(df["label"].value_counts())</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah baris: 200
+print(&quot;\nDistribusi label:&quot;)
+print(df[&quot;label&quot;].value_counts())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah baris: 200
 Jumlah kolom: 3
 
 Data kosong:
@@ -803,24 +811,7 @@ Distribusi label:
 label
 sport      100
 finance    100
-Name: count, dtype: int64</pre></details></section><section id="catatan-dataset"><h2>Catatan Dataset<a class="headerlink" href="#catatan-dataset" title="Link to this heading">#</a></h2><p>Notebook menyimpan dataset akhir sebagai <code>dataset_detik.csv</code>. Kolom yang dibentuk adalah <code>id</code>, <code>isi_berita</code>, dan <code>label</code>. Output notebook menunjukkan 200 baris (100 Sport dan 100 Finance) pada hasil run yang tersimpan di notebook; hasil eksekusi baru dapat berbeda jika ada URL yang gagal diambil.</p></section></section><script type="text/x-thebe-config">
-    {
-        requestKernel: true,
-        binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
-        },
-        codeMirrorConfig: {
-            theme: "abcdef",
-            mode: "python"
-        },
-        kernelOptions: {
-            name: "python3",
-            path: "./."
-        },
-        predefinedOutput: true
-    }
-    </script><script>kernelName = 'python3'</script></article>
+Name: count, dtype: int64</pre></details></section></section></article>
 <footer class="prev-next-footer">
 <div class="prev-next-area">
 <a class="left-prev" href="intro.html" title="previous page">
@@ -838,7 +829,20 @@ Name: count, dtype: int64</pre></details></section><section id="catatan-dataset"
 <div class="sidebar-secondary-item">
 <div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
 <nav class="bd-toc-nav page-toc">
-<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1">Instalasi Library</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2">Import Library</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3">Mengakses Halaman Sport Detik</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4">Membaca Struktur HTML Halaman Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5">Menelusuri Link dari Halaman Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-6">Memfilter Link Artikel Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-7">Crawling 100 Link Artikel Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-8">Scraping Isi Berita Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-9">Memeriksa Halaman Finance Detik</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-10">Crawling 100 Link Artikel Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-11">Scraping Isi Berita Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-12">Menggabungkan Data Sport dan Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-13">Menyimpan Dataset ke CSV</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-14">Memeriksa Dataset Akhir</a></li></ul>
+<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1">Sel Kode 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-2">Sel Kode 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-3">Sel Kode 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-4">Sel Kode 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-5">Hanya mengambil link yang berasal dari sport.detik.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-6">Artikel Detik biasanya memiliki /d- pada URL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-7">Hilangkan duplikat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-8">Sel Kode 8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-9">Sel Kode 9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-10">Mengambil URL artikel Finance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-11">Sel Kode 11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-12">Gabungkan data Sport dan Finance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-13">Sel Kode 13</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-14">Sel Kode 14</a></li></ul>
 </nav>
 </div>
 </div>
