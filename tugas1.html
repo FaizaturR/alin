@@ -722,15 +722,141 @@
                             </p>
 
 
-                            <p>
-                                File HTML untuk ditampilkan di halaman ini tidak tersedia.
-                                Unduh notebook crawling untuk melihat kode dan hasil scraping.
+                            <style>
+                                .notebook-cell {
+                                    margin: 1rem 0;
+                                    padding: 1rem;
+                                    border: 1px solid #d8dee4;
+                                    border-radius: 0.4rem;
+                                    background: #fff;
+                                }
+                                .notebook-cell pre {
+                                    margin: 0;
+                                    padding: 0.75rem;
+                                    overflow-x: auto;
+                                    background: #f6f8fa;
+                                    color: #24292f;
+                                    white-space: pre-wrap;
+                                }
+                                .notebook-output {
+                                    margin-top: 0.75rem;
+                                    overflow-x: auto;
+                                }
+                                .notebook-output table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+                                .notebook-output th,
+                                .notebook-output td {
+                                    padding: 0.4rem;
+                                    border: 1px solid #d8dee4;
+                                    text-align: left;
+                                }
+                            </style>
+
+                            <p id="notebook-status" role="status" aria-live="polite">
+                                Memuat notebook...
                             </p>
-                            <a class="btn btn-primary"
-                               href="_sources/crawling.ipynb"
-                               download>
-                                Unduh Notebook Crawling Berita
-                            </a>
+                            <div id="notebook-content"></div>
+
+                            <script>
+                                (async function () {
+                                    const status = document.getElementById("notebook-status");
+                                    const content = document.getElementById("notebook-content");
+
+                                    function asText(value) {
+                                        return Array.isArray(value) ? value.join("") : (value || "");
+                                    }
+
+                                    function appendOutputHtml(parent, html) {
+                                        const parsed = new DOMParser().parseFromString(html, "text/html");
+                                        const allowedTags = new Set([
+                                            "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TH", "TD", "CAPTION"
+                                        ]);
+
+                                        function copyNode(node, target) {
+                                            if (node.nodeType === Node.TEXT_NODE) {
+                                                target.appendChild(document.createTextNode(node.textContent));
+                                            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                                                if (node.tagName === "STYLE" || node.tagName === "SCRIPT") {
+                                                    return;
+                                                }
+                                                if (!allowedTags.has(node.tagName)) {
+                                                    node.childNodes.forEach(child => copyNode(child, target));
+                                                    return;
+                                                }
+                                                const safeElement = document.createElement(node.tagName.toLowerCase());
+                                                target.appendChild(safeElement);
+                                                node.childNodes.forEach(child => copyNode(child, safeElement));
+                                            }
+                                        }
+
+                                        parsed.body.childNodes.forEach(node => copyNode(node, parent));
+                                    }
+
+                                    try {
+                                        const response = await fetch("_sources/crawling.ipynb");
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP ${response.status}`);
+                                        }
+
+                                        const notebook = await response.json();
+                                        notebook.cells.forEach((cell, index) => {
+                                            const cellElement = document.createElement("section");
+                                            cellElement.className = "notebook-cell";
+
+                                            if (cell.cell_type === "code") {
+                                                const code = document.createElement("pre");
+                                                code.textContent = asText(cell.source);
+                                                cellElement.appendChild(code);
+
+                                                (cell.outputs || []).forEach(output => {
+                                                    const outputElement = document.createElement("div");
+                                                    outputElement.className = "notebook-output";
+                                                    const data = output.data || {};
+
+                                                    if (data["text/html"]) {
+                                                        appendOutputHtml(outputElement, asText(data["text/html"]));
+                                                    } else if (data["text/plain"]) {
+                                                        const text = document.createElement("pre");
+                                                        text.textContent = asText(data["text/plain"]);
+                                                        outputElement.appendChild(text);
+                                                    } else if (output.text) {
+                                                        const text = document.createElement("pre");
+                                                        text.textContent = asText(output.text);
+                                                        outputElement.appendChild(text);
+                                                    } else if (output.traceback) {
+                                                        const text = document.createElement("pre");
+                                                        text.textContent = output.traceback.join("\n");
+                                                        outputElement.appendChild(text);
+                                                    }
+
+                                                    if (outputElement.hasChildNodes()) {
+                                                        cellElement.appendChild(outputElement);
+                                                    }
+                                                });
+                                            } else {
+                                                const text = document.createElement("pre");
+                                                text.textContent = asText(cell.source);
+                                                cellElement.appendChild(text);
+                                            }
+
+                                            content.appendChild(cellElement);
+                                        });
+
+                                        status.textContent = `${notebook.cells.length} sel notebook berhasil dimuat.`;
+                                    } catch (error) {
+                                        status.textContent = `Notebook tidak dapat dimuat: ${error.message}`;
+                                    }
+                                })();
+                            </script>
+
+                            <p>
+                                <a href="_sources/crawling.ipynb" download>
+                                    Unduh file notebook
+                                </a>
+                                jika ingin membukanya di Jupyter.
+                            </p>
 
                         </section>
 
