@@ -1,0 +1,1618 @@
+
+<!DOCTYPE html>
+
+<html data-content_root="./" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Skip-Gram untuk klasifikasi data Berita menggunakan Naive bayes</title>
+<script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+<!-- Loaded before other Sphinx assets -->
+<link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" rel="preload" type="font/woff2"/>
+<link href="_static/pygments.css?v=fa44fd50" rel="stylesheet" type="text/css"/>
+<link href="_static/styles/sphinx-book-theme.css?v=384b581d" rel="stylesheet" type="text/css"/>
+<link href="_static/togglebutton.css?v=13237357" rel="stylesheet" type="text/css"/>
+<link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx-thebe.css?v=4fa983c6" rel="stylesheet" type="text/css"/>
+<link href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<link as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/documentation_options.js?v=9eb32ce0"></script>
+<script src="_static/doctools.js?v=9a2dae69"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="_static/copybutton.js?v=f281be69"></script>
+<script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="_static/togglebutton.js?v=4a39c7ea"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script src="_static/design-tabs.js?v=36754332"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>DOCUMENTATION_OPTIONS.pagename = 'tugas1';</script>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="intro.html" rel="prev" title="Welcome to my Jupyter Book"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="en" name="docsearch:language"/>
+<style>
+.notebook-output{margin:1rem 0 1.5rem;border:1px solid #d8dee8;border-radius:8px;padding:.75rem 1rem;background:#f8fafc}
+.notebook-output summary{cursor:pointer;font-weight:600;margin-bottom:.5rem}
+.output-text,.notebook-output pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2f5;padding:1rem;border-radius:6px;font-size:.88rem;max-height:520px;overflow:auto}
+.notebook-table{overflow-x:auto;margin:.75rem 0}.notebook-table table{border-collapse:collapse;width:100%;font-size:.9rem}.notebook-table th,.notebook-table td{border:1px solid #d7dce2;padding:.45rem .6rem;text-align:left}.notebook-table th{background:#eef2f7}
+.bd-article section section{margin-top:1.5rem}.admonition.note{border-left:4px solid #4776a8;padding:.8rem 1rem;background:#f2f7fc;margin:1rem 0 1.5rem}
+</style></head>
+<body data-bs-root-margin="0px 0px -60%" data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-default-mode="" data-offset="180">
+<a class="skip-link" href="#main-content" id="pst-skip-link">Skip to main content</a>
+<div id="pst-scroll-pixel-helper"></div>
+<button class="btn rounded-pill" id="pst-back-to-top" type="button">
+<i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+<input class="sidebar-toggle" id="__primary" name="__primary" type="checkbox"/>
+<label class="overlay overlay-primary" for="__primary"></label>
+<input class="sidebar-toggle" id="__secondary" name="__secondary" type="checkbox"/>
+<label class="overlay overlay-secondary" for="__secondary"></label>
+<div class="search-button__wrapper">
+<div class="search-button__overlay"></div>
+<div class="search-button__search-container">
+<form action="search.html" class="bd-search d-flex align-items-center" method="get">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input aria-label="Search this book..." autocapitalize="off" autocomplete="off" autocorrect="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." spellcheck="false" type="search"/>
+<span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+</div>
+<header class="bd-header navbar navbar-expand-lg bd-navbar">
+</header>
+<div class="bd-container">
+<div class="bd-container__inner bd-page-width">
+<div class="bd-sidebar-primary bd-sidebar">
+<div class="sidebar-header-items sidebar-primary__section">
+</div>
+<div class="sidebar-primary-items__start sidebar-primary__section">
+<div class="sidebar-primary-item">
+<a class="navbar-brand logo" href="#">
+<img alt="My sample book - Home" class="logo__image only-light" src="_static/photo.jpg"/>
+<script>document.write(`<img src="_static/photo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+</a></div>
+<div class="sidebar-primary-item">
+<script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+<div class="sidebar-primary-item"><nav aria-label="Main" class="bd-links bd-docs-nav">
+<div class="bd-toc-item navbar-nav active">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
+<li class="toctree-l1">
+<a class="reference internal" href="intro.html">
+                    Welcome to my Jupyter Book
+                </a>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Skip-Gram untuk klasifikasi data Berita menggunakan Naive bayes</a></li>
+</ul>
+</div>
+</nav></div>
+</div>
+<div class="sidebar-primary-items__end sidebar-primary__section">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<main class="bd-main" id="main-content">
+<div class="sbt-scroll-pixel-helper"></div>
+<div class="bd-content">
+<div class="bd-article-container">
+<div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+<div class="header-article-items__start">
+<div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" data-bs-placement="bottom" data-bs-toggle="tooltip" for="__primary" title="Toggle primary sidebar">
+<span class="fa-solid fa-bars"></span>
+</label></div>
+</div>
+<div class="header-article-items__end">
+<div class="header-article-item">
+<div class="article-header-buttons">
+<div class="dropdown dropdown-source-buttons">
+<button aria-expanded="false" aria-label="Source repositories" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fab fa-github"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-source-repository-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book" target="_blank" title="Source repository">
+<span class="btn__icon-container">
+<i class="fab fa-github"></i>
+</span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+<li><a class="btn btn-sm btn-source-issues-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&amp;body=Your%20issue%20content%20here." target="_blank" title="Open an issue">
+<span class="btn__icon-container">
+<i class="fas fa-lightbulb"></i>
+</span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="dropdown dropdown-download-buttons">
+<button aria-expanded="false" aria-label="Download this page" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fas fa-download"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-download-source-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="_sources/crawling.ipynb" target="_blank" title="Download source file">
+<span class="btn__icon-container">
+<i class="fas fa-file"></i>
+</span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+<li>
+<button class="btn btn-sm btn-download-pdf-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" onclick="window.print()" title="Print to PDF">
+<span class="btn__icon-container">
+<i class="fas fa-file-pdf"></i>
+</span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+</ul>
+</div>
+<button class="btn btn-sm btn-fullscreen-button" data-bs-placement="bottom" data-bs-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
+<span class="btn__icon-container">
+<i class="fas fa-expand"></i>
+</span>
+</button>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="onlyprint" id="jb-print-docs-body">
+<h1>Skip-Gram untuk klasifikasi data Berita menggunakan Naive bayes</h1>
+<!-- Table of contents -->
+<div id="print-main-content">
+<div id="jb-print-toc">
+<ul>
+<li><a href="#web-scraping-berita-detik">Skip-Gram untuk klasifikasi data Berita menggunakan Naive bayes</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="searchbox"></div>
+<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="skipgram-klasifikasi-berita-naive-bayes"><h1>Skip-Gram untuk klasifikasi data Berita menggunakan Naive bayes</h1><p>Konten halaman ini dibuat berdasarkan notebook <code>Preprocessing_Skipgram.ipynb</code>. Kode, teks penjelasan, dan output ditampilkan mengikuti isi notebook sumber.</p><section id="bagian-1"><h2>Import Library<a class="headerlink" href="#bagian-1" title="Link to this heading">#</a></h2><h3>Import Library</h3></section>
+<section id="bagian-2"><h2>Langkah 2<a class="headerlink" href="#bagian-2" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
+import re
+import nltk
+
+from nltk.corpus import stopwords
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+
+from gensim.models import Word2Vec
+
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)</pre></div></div></section>
+<section id="bagian-3"><h2>Load Dataset<a class="headerlink" href="#bagian-3" title="Link to this heading">#</a></h2><h3>Load Dataset</h3></section>
+<section id="bagian-4"><h2>Langkah 4<a class="headerlink" href="#bagian-4" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(
+    &quot;dataset_detik.csv&quot;,
+    sep=&quot;;&quot;,
+    encoding=&quot;utf-8-sig&quot;
+)
+
+print(&quot;Ukuran dataset:&quot;, df.shape)
+
+display(df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Ukuran dataset: (200, 3)</pre></details><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-5"><h2>Menyiapkan Stopword dan Stemming<a class="headerlink" href="#bagian-5" title="Link to this heading">#</a></h2><h3>Menyiapkan Stopword dan Stemming</h3></section>
+<section id="bagian-6"><h2>Langkah 6<a class="headerlink" href="#bagian-6" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>nltk.download(&quot;stopwords&quot;)
+
+stop_words = set(stopwords.words(&quot;indonesian&quot;))
+
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
+
+print(&quot;Jumlah stopword:&quot;, len(stop_words))
+print(&quot;Stemmer berhasil dibuat.&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah stopword: 757
+Stemmer berhasil dibuat.</pre></details><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\LENOVO\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!</pre></details></section>
+<section id="bagian-7"><h2>Preprocessing<a class="headerlink" href="#bagian-7" title="Link to this heading">#</a></h2><h3>Preprocessing</h3></section>
+<section id="bagian-8"><h2>1. Lowercase<a class="headerlink" href="#bagian-8" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>def preprocessing(teks):
+    # 1. Lowercase
+    teks = teks.lower()
+
+    # 2. Hapus angka
+    teks = re.sub(r&quot;\d+&quot;, &quot; &quot;, teks)
+
+    # 3. Hapus tanda baca
+    teks = re.sub(r&quot;[^\w\s]&quot;, &quot; &quot;, teks)
+
+    # 4. Hapus spasi berlebih
+    teks = re.sub(r&quot;\s+&quot;, &quot; &quot;, teks).strip()
+
+    # 5. Tokenisasi
+    tokens = teks.split()
+
+    # 6. Stopword removal
+    tokens = [kata for kata in tokens if kata not in stop_words]
+
+    # 7. Stemming
+    tokens = [stemmer.stem(kata) for kata in tokens]
+
+    return tokens</pre></div></div></section>
+<section id="bagian-9"><h2>Langkah 9<a class="headerlink" href="#bagian-9" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df[&quot;preprocessing&quot;] = df[&quot;isi_berita&quot;].apply(preprocessing)
+display(
+    df[[&quot;isi_berita&quot;, &quot;preprocessing&quot;, &quot;label&quot;]].head()
+)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isi_berita</th>
+      <th>preprocessing</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+      <td>[ciamis, siswa, sd, ikut, lomba, olahraga, tra...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>[seri, motogp, marc, marquez, sukses, sapu, be...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>[alwi, farhan, moh, zaki, ubaidillah, muhamad,...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>[viral, insiden, cepirit, ajang, hyrox, atlet,...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>[dejan, fedinansyah, felisha, alberta, nathani...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-10"><h2>Split Data<a class="headerlink" href="#bagian-10" title="Link to this heading">#</a></h2><h3>Split Data</h3></section>
+<section id="bagian-11"><h2>Langkah 11<a class="headerlink" href="#bagian-11" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>X_train_sg, X_test_sg, y_train_sg, y_test_sg = train_test_split(
+    df[&quot;preprocessing&quot;],
+    df[&quot;label&quot;],
+    test_size=0.2,
+    random_state=42,
+    stratify=df[&quot;label&quot;]
+)
+
+print(&quot;Jumlah data training :&quot;, len(X_train_sg))
+print(&quot;Jumlah data testing  :&quot;, len(X_test_sg))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah data training : 160
+Jumlah data testing  : 40</pre></details></section>
+<section id="bagian-12"><h2>Fungsi membuat Vector Space Model<a class="headerlink" href="#bagian-12" title="Link to this heading">#</a></h2><h3>Fungsi membuat Vector Space Model</h3></section>
+<section id="bagian-13"><h2>Langkah 13<a class="headerlink" href="#bagian-13" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>def document_vector(tokens, model):
+    vectors = []
+
+    for word in tokens:
+        if word in model.wv:
+            vectors.append(model.wv[word])
+
+    if len(vectors) == 0:
+        return np.zeros(model.vector_size)
+
+    return np.mean(vectors, axis=0)</pre></div></div></section>
+<section id="bagian-14"><h2>Paramenter Eksperimen<a class="headerlink" href="#bagian-14" title="Link to this heading">#</a></h2><h3>Paramenter Eksperimen</h3></section>
+<section id="bagian-15"><h2>Langkah 15<a class="headerlink" href="#bagian-15" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>parameter_eksperimen = [
+    {&quot;vector_size&quot;: 5, &quot;window&quot;: 3},
+    {&quot;vector_size&quot;: 5, &quot;window&quot;: 5},
+    {&quot;vector_size&quot;: 5, &quot;window&quot;: 7},
+    {&quot;vector_size&quot;: 10, &quot;window&quot;: 3},
+    {&quot;vector_size&quot;: 10, &quot;window&quot;: 5},
+    {&quot;vector_size&quot;: 10, &quot;window&quot;: 7}
+]</pre></div></div></section>
+<section id="bagian-16"><h2>Membuat model Word2Vec Skip-Gram<a class="headerlink" href="#bagian-16" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>hasil_eksperimen = []
+
+for i, parameter in enumerate(parameter_eksperimen, start=1):
+
+    vector_size = parameter[&quot;vector_size&quot;]
+    window = parameter[&quot;window&quot;]
+
+    print(&quot;=&quot; * 60)
+    print(f&quot;EKSPERIMEN {i}&quot;)
+    print(f&quot;vector_size = {vector_size}&quot;)
+    print(f&quot;window      = {window}&quot;)
+
+    # Membuat model Word2Vec Skip-Gram
+    model = Word2Vec(
+        sentences=X_train_sg.tolist(),
+        vector_size=vector_size,
+        window=window,
+        min_count=1,
+        workers=1,
+        sg=1,
+        seed=42
+    )
+
+    # Membuat VSM training
+    X_train_vsm = np.array([
+        document_vector(tokens, model)
+        for tokens in X_train_sg
+    ])
+
+    # Membuat VSM testing
+    X_test_vsm = np.array([
+        document_vector(tokens, model)
+        for tokens in X_test_sg
+    ])
+
+    # Naive Bayes
+    nb = GaussianNB()
+
+    nb.fit(
+        X_train_vsm,
+        y_train_sg
+    )
+
+    # Prediksi
+    y_pred = nb.predict(X_test_vsm)
+
+    # Evaluasi
+    accuracy = accuracy_score(
+        y_test_sg,
+        y_pred
+    )
+
+    precision = precision_score(
+        y_test_sg,
+        y_pred,
+        average=&quot;weighted&quot;,
+        zero_division=0
+    )
+
+    recall = recall_score(
+        y_test_sg,
+        y_pred,
+        average=&quot;weighted&quot;,
+        zero_division=0
+    )
+
+    f1 = f1_score(
+        y_test_sg,
+        y_pred,
+        average=&quot;weighted&quot;,
+        zero_division=0
+    )
+
+    print(f&quot;Accuracy  : {accuracy:.4f}&quot;)
+    print(f&quot;Precision : {precision:.4f}&quot;)
+    print(f&quot;Recall    : {recall:.4f}&quot;)
+    print(f&quot;F1-Score  : {f1:.4f}&quot;)
+
+    # Simpan hasil
+    hasil_eksperimen.append({
+        &quot;Eksperimen&quot;: i,
+        &quot;vector_size&quot;: vector_size,
+        &quot;window&quot;: window,
+        &quot;Accuracy&quot;: accuracy,
+        &quot;Precision&quot;: precision,
+        &quot;Recall&quot;: recall,
+        &quot;F1-Score&quot;: f1
+    })</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">============================================================
+EKSPERIMEN 1
+vector_size = 5
+window      = 3
+Accuracy  : 0.9250
+Precision : 0.9348
+Recall    : 0.9250
+F1-Score  : 0.9246
+============================================================
+EKSPERIMEN 2
+vector_size = 5
+window      = 5
+Accuracy  : 0.9000
+Precision : 0.9167
+Recall    : 0.9000
+F1-Score  : 0.8990
+============================================================
+EKSPERIMEN 3
+vector_size = 5
+window      = 7
+Accuracy  : 0.9750
+Precision : 0.9762
+Recall    : 0.9750
+F1-Score  : 0.9750
+============================================================
+EKSPERIMEN 4
+vector_size = 10
+window      = 3
+Accuracy  : 0.9000
+Precision : 0.9167
+Recall    : 0.9000
+F1-Score  : 0.8990
+============================================================
+EKSPERIMEN 5
+vector_size = 10
+window      = 5
+Accuracy  : 0.9750
+Precision : 0.9762
+Recall    : 0.9750
+F1-Score  : 0.9750
+============================================================
+EKSPERIMEN 6
+vector_size = 10
+window      = 7
+Accuracy  : 0.9750
+Precision : 0.9762
+Recall    : 0.9750
+F1-Score  : 0.9750</pre></details></section>
+<section id="bagian-17"><h2>Langkah 17<a class="headerlink" href="#bagian-17" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>rekap_sg = pd.DataFrame(hasil_eksperimen)
+
+display(rekap_sg)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Eksperimen</th>
+      <th>vector_size</th>
+      <th>window</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>0.925</td>
+      <td>0.934783</td>
+      <td>0.925</td>
+      <td>0.924576</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>5</td>
+      <td>5</td>
+      <td>0.900</td>
+      <td>0.916667</td>
+      <td>0.900</td>
+      <td>0.898990</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>10</td>
+      <td>3</td>
+      <td>0.900</td>
+      <td>0.916667</td>
+      <td>0.900</td>
+      <td>0.898990</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>10</td>
+      <td>5</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>10</td>
+      <td>7</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-18"><h2>Langkah 18<a class="headerlink" href="#bagian-18" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>rekap_sg = rekap_sg.sort_values(
+    by=&quot;Accuracy&quot;,
+    ascending=False
+).reset_index(drop=True)
+
+display(rekap_sg)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Eksperimen</th>
+      <th>vector_size</th>
+      <th>window</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5</td>
+      <td>10</td>
+      <td>5</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6</td>
+      <td>10</td>
+      <td>7</td>
+      <td>0.975</td>
+      <td>0.976190</td>
+      <td>0.975</td>
+      <td>0.974984</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>0.925</td>
+      <td>0.934783</td>
+      <td>0.925</td>
+      <td>0.924576</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>5</td>
+      <td>5</td>
+      <td>0.900</td>
+      <td>0.916667</td>
+      <td>0.900</td>
+      <td>0.898990</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>4</td>
+      <td>10</td>
+      <td>3</td>
+      <td>0.900</td>
+      <td>0.916667</td>
+      <td>0.900</td>
+      <td>0.898990</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-19"><h2>Langkah 19<a class="headerlink" href="#bagian-19" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>hasil_terbaik = rekap_sg.iloc[0]
+
+print(&quot;PARAMETER TERBAIK&quot;)
+print(&quot;=&quot; * 40)
+print(&quot;vector_size :&quot;, int(hasil_terbaik[&quot;vector_size&quot;]))
+print(&quot;window      :&quot;, int(hasil_terbaik[&quot;window&quot;]))
+print(f&quot;Accuracy    : {hasil_terbaik[&#x27;Accuracy&#x27;]*100:.2f}%&quot;)
+print(f&quot;Precision   : {hasil_terbaik[&#x27;Precision&#x27;]*100:.2f}%&quot;)
+print(f&quot;Recall      : {hasil_terbaik[&#x27;Recall&#x27;]*100:.2f}%&quot;)
+print(f&quot;F1-Score    : {hasil_terbaik[&#x27;F1-Score&#x27;]*100:.2f}%&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">PARAMETER TERBAIK
+========================================
+vector_size : 10
+window      : 5
+Accuracy    : 97.50%
+Precision   : 97.62%
+Recall      : 97.50%
+F1-Score    : 97.50%</pre></details></section>
+<section id="bagian-20"><h2>Parameter model terbaik<a class="headerlink" href="#bagian-20" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Parameter model terbaik
+best_vector_size = 10
+best_window = 5
+
+# Training ulang model Skip-Gram terbaik
+model_sg_final = Word2Vec(
+    sentences=X_train_sg.tolist(),
+    vector_size=best_vector_size,
+    window=best_window,
+    min_count=1,
+    workers=1,
+    sg=1,
+    seed=42
+)
+
+print(&quot;Model Skip-Gram final berhasil dibuat.&quot;)
+print(&quot;Vector size :&quot;, model_sg_final.vector_size)
+print(&quot;Window      :&quot;, best_window)
+print(&quot;Vocabulary  :&quot;, len(model_sg_final.wv))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Model Skip-Gram final berhasil dibuat.
+Vector size : 10
+Window      : 5
+Vocabulary  : 4533</pre></details></section>
+<section id="bagian-21"><h2>Langkah 21<a class="headerlink" href="#bagian-21" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>X_train_vsm_final = np.array([
+    document_vector(tokens, model_sg_final)
+    for tokens in X_train_sg
+])
+
+X_test_vsm_final = np.array([
+    document_vector(tokens, model_sg_final)
+    for tokens in X_test_sg
+])
+
+print(&quot;Ukuran VSM training :&quot;, X_train_vsm_final.shape)
+print(&quot;Ukuran VSM testing  :&quot;, X_test_vsm_final.shape)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Ukuran VSM training : (160, 10)
+Ukuran VSM testing  : (40, 10)</pre></details></section>
+<section id="bagian-22"><h2>Langkah 22<a class="headerlink" href="#bagian-22" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>vsm_final_df = pd.DataFrame(
+    X_train_vsm_final,
+    columns=[f&quot;V{i}&quot; for i in range(1, 11)]
+)
+
+vsm_final_df[&quot;label&quot;] = y_train_sg.values
+
+display(vsm_final_df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>V1</th>
+      <th>V2</th>
+      <th>V3</th>
+      <th>V4</th>
+      <th>V5</th>
+      <th>V6</th>
+      <th>V7</th>
+      <th>V8</th>
+      <th>V9</th>
+      <th>V10</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.152964</td>
+      <td>-0.227834</td>
+      <td>0.340190</td>
+      <td>0.057574</td>
+      <td>0.448571</td>
+      <td>0.638491</td>
+      <td>0.545975</td>
+      <td>-0.630348</td>
+      <td>-0.717888</td>
+      <td>0.367997</td>
+      <td>finance</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.577233</td>
+      <td>0.138268</td>
+      <td>0.219658</td>
+      <td>0.215622</td>
+      <td>0.620983</td>
+      <td>0.511252</td>
+      <td>0.626793</td>
+      <td>-0.781703</td>
+      <td>-0.987473</td>
+      <td>0.150909</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.078963</td>
+      <td>-0.262781</td>
+      <td>0.276011</td>
+      <td>0.053892</td>
+      <td>0.449015</td>
+      <td>0.596914</td>
+      <td>0.485277</td>
+      <td>-0.713503</td>
+      <td>-0.719815</td>
+      <td>0.286378</td>
+      <td>finance</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.237937</td>
+      <td>-0.086221</td>
+      <td>0.211459</td>
+      <td>0.109915</td>
+      <td>0.407042</td>
+      <td>0.465883</td>
+      <td>0.437822</td>
+      <td>-0.739113</td>
+      <td>-0.671296</td>
+      <td>0.188584</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.219134</td>
+      <td>-0.169759</td>
+      <td>0.404722</td>
+      <td>0.771006</td>
+      <td>1.087943</td>
+      <td>-0.353686</td>
+      <td>0.319928</td>
+      <td>-1.788126</td>
+      <td>-0.407343</td>
+      <td>0.231027</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-23"><h2>Langkah 23<a class="headerlink" href="#bagian-23" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>nb_sg_final = GaussianNB()
+
+nb_sg_final.fit(
+    X_train_vsm_final,
+    y_train_sg
+)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left;
+}
+
+.user-set td.value pre {
+    color:rgb(255, 94, 0) !important;
+    background-color: transparent !important;
+}
+
+.default td {
+    color: black;
+    text-align: left;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianNB()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GaussianNB</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.GaussianNB.html">?<span>Documentation for GaussianNB</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+                    
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('priors',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">priors&nbsp;</td>
+            <td class="value">None</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('var_smoothing',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">var_smoothing&nbsp;</td>
+            <td class="value">1e-09</td>
+        </tr>
+    
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    </div></div></div></div></div><script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling.textContent.trim();
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+</script></body></div></details></section>
+<section id="bagian-24"><h2>Langkah 24<a class="headerlink" href="#bagian-24" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>y_pred_sg_final = nb_sg_final.predict(
+    X_test_vsm_final
+)
+
+accuracy_final = accuracy_score(
+    y_test_sg,
+    y_pred_sg_final
+)
+
+precision_final = precision_score(
+    y_test_sg,
+    y_pred_sg_final,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+
+recall_final = recall_score(
+    y_test_sg,
+    y_pred_sg_final,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+
+f1_final = f1_score(
+    y_test_sg,
+    y_pred_sg_final,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+
+print(&quot;HASIL MODEL SKIP-GRAM&quot;)
+print(&quot;=&quot; * 45)
+print(&quot;Vector Size :&quot;, best_vector_size)
+print(&quot;Window      :&quot;, best_window)
+print(f&quot;Accuracy    : {accuracy_final:.4f} ({accuracy_final*100:.2f}%)&quot;)
+print(f&quot;Precision   : {precision_final:.4f} ({precision_final*100:.2f}%)&quot;)
+print(f&quot;Recall      : {recall_final:.4f} ({recall_final*100:.2f}%)&quot;)
+print(f&quot;F1-Score    : {f1_final:.4f} ({f1_final*100:.2f}%)&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">HASIL MODEL SKIP-GRAM
+=============================================
+Vector Size : 10
+Window      : 5
+Accuracy    : 0.9750 (97.50%)
+Precision   : 0.9762 (97.62%)
+Recall      : 0.9750 (97.50%)
+F1-Score    : 0.9750 (97.50%)</pre></details></section>
+<section id="bagian-25"><h2>Menyimpan Model Naive Bayes dan Skipgram<a class="headerlink" href="#bagian-25" title="Link to this heading">#</a></h2><h3>Menyimpan Model Naive Bayes dan Skipgram</h3></section>
+<section id="bagian-26"><h2>Langkah 26<a class="headerlink" href="#bagian-26" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>model_sg_final.save(&quot;skipgram_final.model&quot;)
+
+print(&quot;Model Skip-Gram berhasil disimpan.&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Model Skip-Gram berhasil disimpan.</pre></details></section>
+<section id="bagian-27"><h2>Langkah 27<a class="headerlink" href="#bagian-27" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import joblib
+
+joblib.dump(
+    nb_sg_final,
+    &quot;naive_bayes_skipgram.pkl&quot;
+)
+
+print(&quot;Model Naive Bayes berhasil disimpan.&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Model Naive Bayes berhasil disimpan.</pre></details></section>
+<section id="bagian-28"><h2>Langkah 28<a class="headerlink" href="#bagian-28" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import os
+
+print(os.path.exists(&quot;skipgram_final.model&quot;))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">True</pre></details></section></section></article>
+<footer class="prev-next-footer">
+<div class="prev-next-area">
+<a class="left-prev" href="intro.html" title="previous page">
+<i class="fa-solid fa-angle-left"></i>
+<div class="prev-next-info">
+<p class="prev-next-subtitle">previous</p>
+<p class="prev-next-title">Welcome to my Jupyter Book</p>
+</div>
+</a>
+</div>
+</footer>
+</div>
+<div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+<div class="sidebar-secondary-item">
+<div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
+<nav class="bd-toc-nav page-toc">
+<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1">Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-2">Langkah 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-3">Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-4">Langkah 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-5">Menyiapkan Stopword dan Stemming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-6">Langkah 6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-7">Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-8">1. Lowercase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-9">Langkah 9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-10">Split Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-11">Langkah 11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-12">Fungsi membuat Vector Space Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-13">Langkah 13</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-14">Paramenter Eksperimen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-15">Langkah 15</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-16">Membuat model Word2Vec Skip-Gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-17">Langkah 17</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-18">Langkah 18</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-19">Langkah 19</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-20">Parameter model terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-21">Langkah 21</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-22">Langkah 22</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-23">Langkah 23</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-24">Langkah 24</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-25">Menyimpan Model Naive Bayes dan Skipgram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-26">Langkah 26</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-27">Langkah 27</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-28">Langkah 28</a></li></ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<footer class="bd-footer-content">
+<div class="bd-footer-content__inner container">
+<div class="footer-item">
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+</div>
+<div class="footer-item">
+<p class="copyright">
+
+      © Copyright 2023.
+      <br/>
+</p>
+</div>
+<div class="footer-item">
+</div>
+<div class="footer-item">
+</div>
+</div>
+</footer>
+</main>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+<footer class="bd-footer">
+</footer>
+</body>
+</html>
