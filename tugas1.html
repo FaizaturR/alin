@@ -723,41 +723,114 @@
 
 
                             <style>
-                                .notebook-cell {
-                                    margin: 1rem 0;
-                                    padding: 1rem;
-                                    border: 1px solid #d8dee4;
-                                    border-radius: 0.4rem;
+                                .notebook-shell {
+                                    margin: 1.5rem 0;
+                                    overflow: hidden;
+                                    border: 1px solid #c8c8c8;
                                     background: #fff;
+                                    color: #222;
+                                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
                                 }
-                                .notebook-cell pre {
+                                .notebook-toolbar {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    gap: 1rem;
+                                    padding: 0.65rem 1rem;
+                                    border-bottom: 1px solid #c8c8c8;
+                                    background: #f5f5f5;
+                                    color: #444;
+                                    font-size: 0.9rem;
+                                }
+                                .notebook-toolbar strong {
+                                    font-weight: 600;
+                                }
+                                .notebook-body {
+                                    padding: 0.75rem 0;
+                                }
+                                .notebook-cell {
+                                    display: grid;
+                                    grid-template-columns: 5.5rem minmax(0, 1fr);
+                                    gap: 0.5rem;
+                                    margin: 0.5rem 0;
+                                    padding: 0.25rem 1rem;
+                                    border: 1px solid transparent;
+                                }
+                                .notebook-cell:hover {
+                                    border-color: #e5e5e5;
+                                }
+                                .notebook-prompt {
+                                    padding-top: 0.55rem;
+                                    color: #307fc1;
+                                    font-family: monospace;
+                                    font-size: 0.82rem;
+                                    text-align: right;
+                                    white-space: nowrap;
+                                }
+                                .notebook-input {
+                                    min-width: 0;
+                                    border: 1px solid #cfcfcf;
+                                    background: #f7f7f7;
+                                }
+                                .notebook-input pre,
+                                .notebook-output pre {
                                     margin: 0;
-                                    padding: 0.75rem;
+                                    padding: 0.5rem;
                                     overflow-x: auto;
-                                    background: #f6f8fa;
-                                    color: #24292f;
-                                    white-space: pre-wrap;
+                                    color: #111;
+                                    font-family: monospace;
+                                    font-size: 0.86rem;
+                                    line-height: 1.45;
+                                    white-space: pre;
+                                }
+                                .notebook-output-row {
+                                    display: grid;
+                                    grid-template-columns: 5.5rem minmax(0, 1fr);
+                                    gap: 0.5rem;
+                                    margin-top: 0.35rem;
                                 }
                                 .notebook-output {
-                                    margin-top: 0.75rem;
+                                    min-width: 0;
                                     overflow-x: auto;
+                                }
+                                .notebook-output-prompt {
+                                    color: #d84315;
+                                    font-family: monospace;
+                                    font-size: 0.82rem;
+                                    text-align: right;
                                 }
                                 .notebook-output table {
                                     width: 100%;
                                     border-collapse: collapse;
+                                    font-family: monospace;
+                                    font-size: 0.82rem;
                                 }
                                 .notebook-output th,
                                 .notebook-output td {
-                                    padding: 0.4rem;
-                                    border: 1px solid #d8dee4;
+                                    padding: 0.3rem 0.5rem;
+                                    border: 0;
+                                    border-bottom: 1px solid #ddd;
                                     text-align: left;
+                                }
+                                @media (max-width: 600px) {
+                                    .notebook-cell,
+                                    .notebook-output-row {
+                                        grid-template-columns: 4.5rem minmax(0, 1fr);
+                                        padding-right: 0.5rem;
+                                        padding-left: 0.5rem;
+                                    }
                                 }
                             </style>
 
                             <p id="notebook-status" role="status" aria-live="polite">
                                 Memuat notebook...
                             </p>
-                            <div id="notebook-content"></div>
+                            <div class="notebook-shell">
+                                <div class="notebook-toolbar">
+                                    <strong>crawling.ipynb</strong>
+                                    <span>Python 3 · Notebook</span>
+                                </div>
+                                <div class="notebook-body" id="notebook-content"></div>
+                            </div>
 
                             <script>
                                 (async function () {
@@ -806,11 +879,26 @@
                                             cellElement.className = "notebook-cell";
 
                                             if (cell.cell_type === "code") {
+                                                const executionCount = cell.execution_count;
+                                                const prompt = document.createElement("div");
+                                                prompt.className = "notebook-prompt";
+                                                prompt.textContent = executionCount == null
+                                                    ? "In [ ]:"
+                                                    : `In [${executionCount}]:`;
+                                                cellElement.appendChild(prompt);
+
+                                                const input = document.createElement("div");
+                                                input.className = "notebook-input";
                                                 const code = document.createElement("pre");
                                                 code.textContent = asText(cell.source);
-                                                cellElement.appendChild(code);
+                                                input.appendChild(code);
+                                                cellElement.appendChild(input);
 
                                                 (cell.outputs || []).forEach(output => {
+                                                    const outputRow = document.createElement("div");
+                                                    outputRow.className = "notebook-output-row";
+                                                    const outputPrompt = document.createElement("div");
+                                                    outputPrompt.className = "notebook-output-prompt";
                                                     const outputElement = document.createElement("div");
                                                     outputElement.className = "notebook-output";
                                                     const data = output.data || {};
@@ -832,13 +920,23 @@
                                                     }
 
                                                     if (outputElement.hasChildNodes()) {
-                                                        cellElement.appendChild(outputElement);
+                                                        outputPrompt.textContent = output.output_type === "execute_result"
+                                                            ? `Out[${executionCount}]:`
+                                                            : "";
+                                                        outputRow.append(outputPrompt, outputElement);
+                                                        cellElement.appendChild(outputRow);
                                                     }
                                                 });
                                             } else {
+                                                const prompt = document.createElement("div");
+                                                prompt.className = "notebook-prompt";
+                                                cellElement.appendChild(prompt);
+                                                const input = document.createElement("div");
+                                                input.className = "notebook-input";
                                                 const text = document.createElement("pre");
                                                 text.textContent = asText(cell.source);
-                                                cellElement.appendChild(text);
+                                                input.appendChild(text);
+                                                cellElement.appendChild(input);
                                             }
 
                                             content.appendChild(cellElement);
