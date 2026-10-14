@@ -1,166 +1,100 @@
 
 <!DOCTYPE html>
 
-
-<html lang="en" data-content_root="./" >
-
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Web Scraping Berita Detik &#8212; My sample book</title>
-
-
-
-  <script data-cfasync="false">
+<html data-content_root="./" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Web Scraping Berita Detik — Crawling dan Scraping Data</title>
+<script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
-
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-
-
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
-
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas1';</script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to my Jupyter Book" href="intro.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  </head>
-
-
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-
-
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
-
-  <div id="pst-scroll-pixel-helper"></div>
-
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
+<!-- Loaded before other Sphinx assets -->
+<link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" rel="preload" type="font/woff2"/>
+<link href="_static/pygments.css?v=fa44fd50" rel="stylesheet" type="text/css"/>
+<link href="_static/styles/sphinx-book-theme.css?v=384b581d" rel="stylesheet" type="text/css"/>
+<link href="_static/togglebutton.css?v=13237357" rel="stylesheet" type="text/css"/>
+<link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx-thebe.css?v=4fa983c6" rel="stylesheet" type="text/css"/>
+<link href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<link as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/documentation_options.js?v=9eb32ce0"></script>
+<script src="_static/doctools.js?v=9a2dae69"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="_static/copybutton.js?v=f281be69"></script>
+<script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="_static/togglebutton.js?v=4a39c7ea"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script src="_static/design-tabs.js?v=36754332"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>DOCUMENTATION_OPTIONS.pagename = 'tugas1';</script>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="intro.html" rel="prev" title="Welcome to my Jupyter Book"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="en" name="docsearch:language"/>
+<style>
+.notebook-output{margin:1rem 0 1.5rem;border:1px solid #d8dee8;border-radius:8px;padding:.75rem 1rem;background:#f8fafc}
+.notebook-output summary{cursor:pointer;font-weight:600;margin-bottom:.5rem}
+.output-text,.notebook-output pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2f5;padding:1rem;border-radius:6px;font-size:.88rem;max-height:520px;overflow:auto}
+.notebook-table{overflow-x:auto;margin:.75rem 0}.notebook-table table{border-collapse:collapse;width:100%;font-size:.9rem}.notebook-table th,.notebook-table td{border:1px solid #d7dce2;padding:.45rem .6rem;text-align:left}.notebook-table th{background:#eef2f7}
+.bd-article section section{margin-top:1.5rem}.admonition.note{border-left:4px solid #4776a8;padding:.8rem 1rem;background:#f2f7fc;margin:1rem 0 1.5rem}
+</style></head>
+<body data-bs-root-margin="0px 0px -60%" data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-default-mode="" data-offset="180">
+<a class="skip-link" href="#main-content" id="pst-skip-link">Skip to main content</a>
+<div id="pst-scroll-pixel-helper"></div>
+<button class="btn rounded-pill" id="pst-back-to-top" type="button">
+<i class="fa-solid fa-arrow-up"></i>
     Back to top
   </button>
-
-
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+<input class="sidebar-toggle" id="__primary" name="__primary" type="checkbox"/>
+<label class="overlay overlay-primary" for="__primary"></label>
+<input class="sidebar-toggle" id="__secondary" name="__secondary" type="checkbox"/>
+<label class="overlay overlay-secondary" for="__secondary"></label>
+<div class="search-button__wrapper">
+<div class="search-button__overlay"></div>
+<div class="search-button__search-container">
+<form action="search.html" class="bd-search d-flex align-items-center" method="get">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input aria-label="Search this book..." autocapitalize="off" autocomplete="off" autocorrect="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." spellcheck="false" type="search"/>
+<span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
-  </div>
-
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
-
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-
-
-
-
-
-      <div class="bd-sidebar-primary bd-sidebar">
-
-
-
-  <div class="sidebar-header-items sidebar-primary__section">
-
-
-
-
-  </div>
-
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-
-
+</div>
+<header class="bd-header navbar navbar-expand-lg bd-navbar">
+</header>
+<div class="bd-container">
+<div class="bd-container__inner bd-page-width">
+<div class="bd-sidebar-primary bd-sidebar">
+<div class="sidebar-header-items sidebar-primary__section">
+</div>
+<div class="sidebar-primary-items__start sidebar-primary__section">
+<div class="sidebar-primary-item">
 <a class="navbar-brand logo" href="#">
-
-
-
-
-
-
-
-
-
-
-    <img src="_static/photo.jpg" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="_static/photo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
-
-
+<img alt="My sample book - Home" class="logo__image only-light" src="_static/photo.jpg"/>
+<script>document.write(`<img src="_static/photo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
+<div class="sidebar-primary-item">
+<script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
@@ -169,172 +103,87 @@
    </button>
  `);
  </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
+<div class="sidebar-primary-item"><nav aria-label="Main" class="bd-links bd-docs-nav">
+<div class="bd-toc-item navbar-nav active">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
+<li class="toctree-l1">
+<a class="reference internal" href="intro.html">
                     Welcome to my Jupyter Book
                 </a>
-            </li>
-        </ul>
-        <ul class="nav bd-sidenav">
+</li>
+</ul>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Web Scraping Berita Detik</a></li>
 </ul>
-
-    </div>
+</div>
 </nav></div>
-    </div>
-
-
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-
-  <div id="rtd-footer-container"></div>
-
-
-      </div>
-
-      <main id="main-content" class="bd-main">
-
-
-
+</div>
+<div class="sidebar-primary-items__end sidebar-primary__section">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<main class="bd-main" id="main-content">
 <div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-
-              <div class="bd-header-article">
+<div class="bd-content">
+<div class="bd-article-container">
+<div class="bd-header-article">
 <div class="header-article-items header-article__inner">
-
-    <div class="header-article-items__start">
-
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
+<div class="header-article-items__start">
+<div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" data-bs-placement="bottom" data-bs-toggle="tooltip" for="__primary" title="Toggle primary sidebar">
+<span class="fa-solid fa-bars"></span>
 </label></div>
-
-    </div>
-
-
-    <div class="header-article-items__end">
-
-        <div class="header-article-item">
-
+</div>
+<div class="header-article-items__end">
+<div class="header-article-item">
 <div class="article-header-buttons">
-
-
-
-
-
 <div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-
-
-
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-
-
+<button aria-expanded="false" aria-label="Source repositories" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fab fa-github"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-source-repository-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book" target="_blank" title="Source repository">
 <span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
+<i class="fab fa-github"></i>
+</span>
 <span class="btn__text-container">Repository</span>
 </a>
 </li>
-
-
-
-
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-
-
+<li><a class="btn btn-sm btn-source-issues-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&amp;body=Your%20issue%20content%20here." target="_blank" title="Open an issue">
 <span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
+<i class="fas fa-lightbulb"></i>
+</span>
 <span class="btn__text-container">Open issue</span>
 </a>
 </li>
-
-  </ul>
+</ul>
 </div>
-
-
-
-
-
-
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-
-
-
-      <li><a href="_sources/crawling.ipynb" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-
-
+<button aria-expanded="false" aria-label="Download this page" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fas fa-download"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-download-source-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="_sources/crawling.ipynb" target="_blank" title="Download source file">
 <span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
+<i class="fas fa-file"></i>
+</span>
 <span class="btn__text-container">.ipynb</span>
 </a>
 </li>
-
-
-
-
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-
-
+<li>
+<button class="btn btn-sm btn-download-pdf-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" onclick="window.print()" title="Print to PDF">
 <span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
+<i class="fas fa-file-pdf"></i>
+</span>
 <span class="btn__text-container">.pdf</span>
 </button>
 </li>
-
-  </ul>
+</ul>
 </div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-
-
+<button class="btn btn-sm btn-fullscreen-button" data-bs-placement="bottom" data-bs-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
 <span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
+<i class="fas fa-expand"></i>
+</span>
 </button>
-
-
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -344,8 +193,6 @@ document.write(`
   </button>
 `);
 </script>
-
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -353,68 +200,610 @@ document.write(`
   </button>
 `);
 </script>
-
-</div>
-
-    </div>
-
 </div>
 </div>
-
-
-  </div>
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>Web Scraping Berita Detik</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            <ul>
-                <li><a href="#web-scraping-berita-detik">Web Scraping Berita Detik</a></li>
-            </ul>
-        </div>
-    </div>
 </div>
-
-
-
+</div>
+</div>
+<div class="onlyprint" id="jb-print-docs-body">
+<h1>Web Scraping Berita Detik</h1>
+<!-- Table of contents -->
+<div id="print-main-content">
+<div id="jb-print-toc">
+<ul>
+<li><a href="#web-scraping-berita-detik">Web Scraping Berita Detik</a></li>
+</ul>
+</div>
+</div>
+</div>
 <div id="searchbox"></div>
-                <article class="bd-article">
+<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="web-scraping-berita-detik"><h1>Web Scraping Berita Detik</h1><p>Halaman ini mengikuti isi notebook <code>crawling.ipynb</code>. Prosesnya meliputi persiapan library, crawling URL artikel dari kategori Sport dan Finance, scraping isi berita, penggabungan data, dan penyimpanan dataset.</p><div class="admonition note"><p class="admonition-title">Ringkasan alur</p><p>Target pengumpulan adalah maksimal 100 artikel Sport dan 100 artikel Finance. Jumlah artikel yang benar-benar tersimpan bergantung pada keberhasilan pengambilan isi artikel saat notebook dijalankan.</p></div><section id="langkah-1"><h2>Instalasi Library<a class="headerlink" href="#langkah-1" title="Link to this heading">#</a></h2><p>Memasang library yang digunakan untuk mengakses halaman web, membaca struktur HTML, mengekstrak isi artikel, dan mengolah data.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install requests beautifulsoup4 trafilatura pandas</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Requirement already satisfied: requests in .\enwebmining\lib\site-packages (2.34.2)
+Requirement already satisfied: beautifulsoup4 in .\enwebmining\lib\site-packages (4.15.0)
+Requirement already satisfied: trafilatura in .\enwebmining\lib\site-packages (2.2.0)
+Requirement already satisfied: pandas in .\enwebmining\lib\site-packages (2.3.3)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in .\enwebmining\lib\site-packages (from requests) (3.5.1)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in .\enwebmining\lib\site-packages (from requests) (3.19)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.26 in .\enwebmining\lib\site-packages (from requests) (2.7.0)
+Requirement already satisfied: certifi&gt;=2023.5.7 in .\enwebmining\lib\site-packages (from requests) (2026.7.22)
+Requirement already satisfied: soupsieve&gt;=1.6.1 in .\enwebmining\lib\site-packages (from beautifulsoup4) (2.9.2)
+Requirement already satisfied: typing-extensions&gt;=4.0.0 in .\enwebmining\lib\site-packages (from beautifulsoup4) (4.16.0)
+Requirement already satisfied: courlan&gt;=1.4.0 in .\enwebmining\lib\site-packages (from trafilatura) (1.4.0)
+Requirement already satisfied: htmldate&gt;=1.10.0 in .\enwebmining\lib\site-packages (from trafilatura) (1.10.0)
+Requirement already satisfied: justext&gt;=3.0.2 in .\enwebmining\lib\site-packages (from trafilatura) (3.0.2)
+Requirement already satisfied: lxml&gt;=6.1.1 in .\enwebmining\lib\site-packages (from trafilatura) (6.1.3)
+Requirement already satisfied: numpy&gt;=1.22.4 in .\enwebmining\lib\site-packages (from pandas) (2.2.6)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in .\enwebmining\lib\site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in .\enwebmining\lib\site-packages (from pandas) (2026.3.post1)
+Requirement already satisfied: tzdata&gt;=2022.7 in .\enwebmining\lib\site-packages (from pandas) (2026.4)
+Requirement already satisfied: babel&gt;=2.16.0 in .\enwebmining\lib\site-packages (from courlan&gt;=1.4.0-&gt;trafilatura) (2.18.0)
+Requirement already satisfied: tld&gt;=0.13 in .\enwebmining\lib\site-packages (from courlan&gt;=1.4.0-&gt;trafilatura) (0.13.2)
+Requirement already satisfied: dateparser&gt;=1.1.2 in .\enwebmining\lib\site-packages (from htmldate&gt;=1.10.0-&gt;trafilatura) (1.4.3)
+Requirement already satisfied: regex&gt;=2024.9.11 in .\enwebmining\lib\site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (2026.9.10)
+Requirement already satisfied: tzlocal&gt;=0.2 in .\enwebmining\lib\site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (5.4.4)
+Requirement already satisfied: lxml_html_clean in .\enwebmining\lib\site-packages (from lxml[html_clean]&gt;=4.4.2-&gt;justext&gt;=3.0.2-&gt;trafilatura) (0.4.5)
+Requirement already satisfied: six&gt;=1.5 in .\enwebmining\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)</pre></details></section><section id="langkah-2"><h2>Import Library<a class="headerlink" href="#langkah-2" title="Link to this heading">#</a></h2><p>Mengimpor library yang digunakan selama proses crawling dan scraping.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+from bs4 import BeautifulSoup
+import trafilatura
+import pandas as pd
 
-  <section class="tex2jax_ignore mathjax_ignore" id="web-scraping-berita-detik">
-<h1>Web Scraping Berita Detik<a class="headerlink" href="#web-scraping-berita-detik" title="Link to this heading">#</a></h1>
-<p>Halaman ini menampilkan contoh sederhana crawling berita dari Detik.com menggunakan Python dan Beautiful Soup.</p>
-<h2 id="crawling-berita">Crawling Berita<a class="headerlink" href="#crawling-berita" title="Link to this heading">#</a></h2>
-<p>Kode berikut mengambil halaman utama Detik.com, mencari judul berita dengan selector <code>.media__title</code>, lalu menampilkan hingga 10 judul yang ditemukan.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+print("Semua library berhasil di-import!")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Semua library berhasil di-import!</pre></details></section><section id="langkah-3"><h2>Mengakses Halaman Sport Detik<a class="headerlink" href="#langkah-3" title="Link to this heading">#</a></h2><p>Memeriksa apakah halaman utama Sport Detik dapat diakses melalui requests.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = "https://sport.detik.com/"
 
+response = requests.get(
+    url,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    }
+)
+
+print("Status code:", response.status_code)
+print("Panjang halaman:", len(response.text))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status code: 200
+Panjang halaman: 276914</pre></details></section><section id="langkah-4"><h2>Membaca Struktur HTML Halaman Sport<a class="headerlink" href="#langkah-4" title="Link to this heading">#</a></h2><p>Mengambil respons halaman dan mengubah HTML menjadi objek BeautifulSoup.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
 from bs4 import BeautifulSoup
 
+url = "https://sport.detik.com/"
+
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+response = requests.get(url, headers=headers)
+
+print("Status:", response.status_code)
+
+soup = BeautifulSoup(response.text, "html.parser")
+
+print("Soup berhasil dibuat")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status: 200
+Soup berhasil dibuat</pre></details></section><section id="langkah-5"><h2>Menelusuri Link dari Halaman Sport<a class="headerlink" href="#langkah-5" title="Link to this heading">#</a></h2><p>Mengambil link pada domain Sport Detik dan menyaring sebagian halaman navigasi.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from urllib.parse import urljoin, urlparse
+
+links_sport = []
+
+for a in soup.find_all("a", href=True):
+    href = urljoin("https://sport.detik.com/", a["href"])
+    parsed = urlparse(href)
+
+    # Hanya mengambil link yang berasal dari sport.detik.com
+    if parsed.netloc == "sport.detik.com":
+        path = parsed.path
+
+        # Hindari halaman utama, indeks, kategori, dan halaman navigasi
+        if (
+            path not in ["/", "/indeks", "/index", "/index/"]
+            and "/indeks" not in path
+            and "/index" not in path
+            and not path.startswith("/tag/")
+        ):
+            links_sport.append(href)
+
+# Hilangkan duplikat
+links_sport = list(dict.fromkeys(links_sport))
+
+print("Jumlah link ditemukan:", len(links_sport))
+
+for link in links_sport[:10]:
+    print(link)</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah link ditemukan: 67
+https://sport.detik.com/sepakbola
+https://sport.detik.com
+https://sport.detik.com/moto-gp
+https://sport.detik.com/raket
+https://sport.detik.com/f1
+https://sport.detik.com/basket
+https://sport.detik.com/sportstyle
+https://sport.detik.com/sport-lain
+https://sport.detik.com/foto
+https://sport.detik.com/video</pre></details></section><section id="langkah-6"><h2>Memfilter Link Artikel Sport<a class="headerlink" href="#langkah-6" title="Link to this heading">#</a></h2><p>Menyaring URL artikel yang memiliki pola /d- pada URL Detik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_sport = []
+
+for a in soup.find_all("a", href=True):
+    href = urljoin("https://sport.detik.com/", a["href"])
+
+    # Artikel Detik biasanya memiliki /d- pada URL
+    if "sport.detik.com" in href and "/d-" in href:
+        links_sport.append(href)
+
+# Hilangkan duplikat
+links_sport = list(dict.fromkeys(links_sport))
+
+print("Jumlah link artikel Sport:", len(links_sport))
+
+for link in links_sport[:10]:
+    print(link)</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah link artikel Sport: 51
+https://sport.detik.com/moto-gp/d-8663795/marc-marquez-akui-dapat-kado-manis-dari-rival-rivalnya
+https://sport.detik.com/sport-lain/d-8664208/eko-yuli-masih-incar-tiket-olimpiade-la-2028
+https://sport.detik.com/moto-gp/d-8664759/mau-kompetitif-lagi-kenapa-quartararo-tak-coba-dapatkan-motor-ducati
+https://sport.detik.com/raket/d-8665053/ana-trias-fokus-medali-di-asian-games-2026
+https://sport.detik.com/moto-gp/d-8665387/senna-agius-lengkapi-grid-motogp-2027-simak-daftar-lengkap-rider-musim-depan
+https://sport.detik.com/fotosport/d-8665222/serunya-549-siswa-di-ciamis-adu-ketangkasan-lomba-olahraga-tradisional
+https://sport.detik.com/sepakbola/liga-spanyol/d-8665696/nilai-7-untuk-emil-audero
+https://sport.detik.com/sepakbola/liga-indonesia/d-8665937/sikat-fc-seoul-persib-bandung-bikin-sejarah-di-negeri-gingseng
+https://sport.detik.com/sepakbola/liga-indonesia/d-8665639/indonesia-vs-thailand-difavoritkan-jadi-final-fifa-asean-cup-2026
+https://sport.detik.com/sepakbola/liga-indonesia/d-8665806/persija-pindah-kandang-vs-java-united-tidak-dihukum-pengurangan-poin</pre></details></section><section id="langkah-7"><h2>Crawling 100 Link Artikel Sport<a class="headerlink" href="#langkah-7" title="Link to this heading">#</a></h2><p>Mengunjungi halaman indeks Sport secara bertahap sampai terkumpul target 100 URL unik atau halaman yang tersedia habis.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import time
+
+def ambil_link_sport(target=100):
+    links = []
+
+    for halaman in range(1, 10):
+        url = f"https://sport.detik.com/indeks?page={halaman}"
+
+        response = requests.get(
+            url,
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
+
+        print(f"Mengambil halaman {halaman} - Status: {response.status_code}")
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        for a in soup.find_all("a", href=True):
+            href = urljoin("https://sport.detik.com/", a["href"])
+
+            if "sport.detik.com" in href and "/d-" in href:
+                links.append(href)
+
+        # Hilangkan duplikat
+        links = list(dict.fromkeys(links))
+
+        print(f"Total link unik: {len(links)}")
+
+        if len(links) &gt;= target:
+            break
+
+        time.sleep(1)
+
+    return links[:target]
 
 
-url = &quot;https://www.detik.com&quot;
+links_sport = ambil_link_sport(100)
 
-response = requests.get(url, headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;})
+print("\nJumlah link Sport yang dikumpulkan:", len(links_sport))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
+Total link unik: 20
+Mengambil halaman 2 - Status: 200
+Total link unik: 39
+Mengambil halaman 3 - Status: 200
+Total link unik: 57
+Mengambil halaman 4 - Status: 200
+Total link unik: 77
+Mengambil halaman 5 - Status: 200
+Total link unik: 97
+Mengambil halaman 6 - Status: 200
+Total link unik: 117
 
-soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
+Jumlah link Sport yang dikumpulkan: 100</pre></details></section><section id="langkah-8"><h2>Scraping Isi Berita Sport<a class="headerlink" href="#langkah-8" title="Link to this heading">#</a></h2><p>Menggunakan Trafilatura untuk mengambil teks artikel. Setiap artikel yang berhasil disimpan dengan label sport.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import trafilatura
+import time
 
+data_sport = []
 
+for i, url in enumerate(links_sport, start=1):
+    try:
+        downloaded = trafilatura.fetch_url(url)
+        isi = trafilatura.extract(downloaded)
 
-news_items = soup.select(&quot;.media__title&quot;)
+        if isi:
+            data_sport.append({
+                "isi_berita": isi,
+                "label": "sport"
+            })
 
-for item in news_items[:10]:
+            print(f"{i}/100 berhasil")
+        else:
+            print(f"{i}/100 gagal mengambil isi")
 
-    title = item.get_text(strip=True)
+    except Exception as e:
+        print(f"{i}/100 error: {e}")
 
-    print(title)
+    time.sleep(1)
 
+print("\nTotal berita Sport berhasil:", len(data_sport))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
+2/100 berhasil
+3/100 berhasil
+4/100 berhasil
+5/100 berhasil
+6/100 berhasil
+7/100 berhasil
+8/100 berhasil
+9/100 berhasil
+10/100 berhasil
+11/100 berhasil
+12/100 berhasil
+13/100 berhasil
+14/100 berhasil
+15/100 berhasil
+16/100 berhasil
+17/100 berhasil
+18/100 berhasil
+19/100 berhasil
+20/100 berhasil
+21/100 berhasil
+22/100 berhasil
+23/100 berhasil
+24/100 berhasil
+25/100 berhasil
+26/100 berhasil
+27/100 berhasil
+28/100 berhasil
+29/100 berhasil
+30/100 berhasil
+31/100 berhasil
+32/100 berhasil
+33/100 berhasil
+34/100 berhasil
+35/100 berhasil
+36/100 berhasil
+37/100 berhasil
+38/100 berhasil
+39/100 berhasil
+40/100 berhasil
+41/100 berhasil
+42/100 berhasil
+43/100 berhasil
+44/100 berhasil
+45/100 berhasil
+46/100 berhasil
+47/100 berhasil
+48/100 berhasil
+49/100 berhasil
+50/100 berhasil
+51/100 berhasil
+52/100 berhasil
+53/100 berhasil
+54/100 berhasil
+55/100 berhasil
+56/100 berhasil
+57/100 berhasil
+58/100 berhasil
+59/100 berhasil
+60/100 berhasil
+61/100 berhasil
+62/100 berhasil
+63/100 berhasil
+64/100 berhasil
+65/100 berhasil
+66/100 berhasil
+67/100 berhasil
+68/100 berhasil
+69/100 berhasil
+70/100 berhasil
+71/100 berhasil
+72/100 berhasil
+73/100 berhasil
+74/100 berhasil
+75/100 berhasil
+76/100 berhasil
+77/100 berhasil
+78/100 berhasil
+79/100 berhasil
+80/100 berhasil
+81/100 berhasil
+82/100 berhasil
+83/100 berhasil
+84/100 berhasil
+85/100 berhasil
+86/100 berhasil
+87/100 berhasil
+88/100 berhasil
+89/100 berhasil
+90/100 berhasil
+91/100 berhasil
+92/100 berhasil
+93/100 berhasil
+94/100 berhasil
+95/100 berhasil
+96/100 berhasil
+97/100 berhasil
+98/100 berhasil
+99/100 berhasil
+100/100 berhasil
 
+Total berita Sport berhasil: 100</pre></details></section><section id="langkah-9"><h2>Memeriksa Halaman Finance Detik<a class="headerlink" href="#langkah-9" title="Link to this heading">#</a></h2><p>Memeriksa akses ke halaman utama Finance Detik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>url = "https://finance.detik.com/"
 
-print(&quot;Total berita berhasil di crawling: &quot;, len(news_items))</pre></div></div>
-<p>Hasil yang ditampilkan bergantung pada berita yang tersedia di halaman Detik.com saat kode dijalankan. Contoh ini hanya menampilkan judul dan tidak menyimpan data ke file.</p>
-</section>
+response_finance = requests.get(
+    url,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    }
+)
 
-    <script type="text/x-thebe-config">
+print("Status code:", response_finance.status_code)
+print("Panjang halaman:", len(response_finance.text))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Status code: 200
+Panjang halaman: 354383</pre></details></section><section id="langkah-10"><h2>Crawling 100 Link Artikel Finance<a class="headerlink" href="#langkah-10" title="Link to this heading">#</a></h2><p>Mengambil URL artikel Finance dari halaman indeks dan membatasi hasil menjadi maksimal 100 link unik.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>links_finance = []
+
+for halaman in range(1, 10):
+    url = f"https://finance.detik.com/indeks?page={halaman}"
+
+    response = requests.get(
+        url,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+
+    print(f"Mengambil halaman {halaman} - Status: {response.status_code}")
+
+    soup_finance = BeautifulSoup(response.text, "html.parser")
+
+    for a in soup_finance.find_all("a", href=True):
+        href = urljoin("https://finance.detik.com/", a["href"])
+
+        # Mengambil URL artikel Finance
+        if "finance.detik.com" in href and "/d-" in href:
+            links_finance.append(href)
+
+    # Hilangkan duplikat
+    links_finance = list(dict.fromkeys(links_finance))
+
+    print(f"Total link unik: {len(links_finance)}")
+
+    if len(links_finance) &gt;= 100:
+        break
+
+    time.sleep(1)
+
+links_finance = links_finance[:100]
+
+print("\nJumlah link Finance yang dikumpulkan:", len(links_finance))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Mengambil halaman 1 - Status: 200
+Total link unik: 16
+Mengambil halaman 2 - Status: 200
+Total link unik: 35
+Mengambil halaman 3 - Status: 200
+Total link unik: 55
+Mengambil halaman 4 - Status: 200
+Total link unik: 74
+Mengambil halaman 5 - Status: 200
+Total link unik: 91
+Mengambil halaman 6 - Status: 200
+Total link unik: 110
+
+Jumlah link Finance yang dikumpulkan: 100</pre></details></section><section id="langkah-11"><h2>Scraping Isi Berita Finance<a class="headerlink" href="#langkah-11" title="Link to this heading">#</a></h2><p>Menggunakan Trafilatura untuk mengekstrak teks artikel Finance dan memberi label finance.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>data_finance = []
+
+for i, url in enumerate(links_finance, start=1):
+    try:
+        downloaded = trafilatura.fetch_url(url)
+        isi = trafilatura.extract(downloaded)
+
+        if isi:
+            data_finance.append({
+                "isi_berita": isi,
+                "label": "finance"
+            })
+
+            print(f"{i}/100 berhasil")
+        else:
+            print(f"{i}/100 gagal mengambil isi")
+
+    except Exception as e:
+        print(f"{i}/100 error: {e}")
+
+    time.sleep(1)
+
+print("\nTotal berita Finance berhasil:", len(data_finance))</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">1/100 berhasil
+2/100 berhasil
+3/100 berhasil
+4/100 berhasil
+5/100 berhasil
+6/100 berhasil
+7/100 berhasil
+8/100 berhasil
+9/100 berhasil
+10/100 berhasil
+11/100 berhasil
+12/100 berhasil
+13/100 berhasil
+14/100 berhasil
+15/100 berhasil
+16/100 berhasil
+17/100 berhasil
+18/100 berhasil
+19/100 berhasil
+20/100 berhasil
+21/100 berhasil
+22/100 berhasil
+23/100 berhasil
+24/100 berhasil
+25/100 berhasil
+26/100 berhasil
+27/100 berhasil
+28/100 berhasil
+29/100 berhasil
+30/100 berhasil
+31/100 berhasil
+32/100 berhasil
+33/100 berhasil
+34/100 berhasil
+35/100 berhasil
+36/100 berhasil
+37/100 berhasil
+38/100 berhasil
+39/100 berhasil
+40/100 berhasil
+41/100 berhasil
+42/100 berhasil
+43/100 berhasil
+44/100 berhasil
+45/100 berhasil
+46/100 berhasil
+47/100 berhasil
+48/100 berhasil
+49/100 berhasil
+50/100 berhasil
+51/100 berhasil
+52/100 berhasil
+53/100 berhasil
+54/100 berhasil
+55/100 berhasil
+56/100 berhasil
+57/100 berhasil
+58/100 berhasil
+59/100 berhasil
+60/100 berhasil
+61/100 berhasil
+62/100 berhasil
+63/100 berhasil
+64/100 berhasil
+65/100 berhasil
+66/100 berhasil
+67/100 berhasil
+68/100 berhasil
+69/100 berhasil
+70/100 berhasil
+71/100 berhasil
+72/100 berhasil
+73/100 berhasil
+74/100 berhasil
+75/100 berhasil
+76/100 berhasil
+77/100 berhasil
+78/100 berhasil
+79/100 berhasil
+80/100 berhasil
+81/100 berhasil
+82/100 berhasil
+83/100 berhasil
+84/100 berhasil
+85/100 berhasil
+86/100 berhasil
+87/100 berhasil
+88/100 berhasil
+89/100 berhasil
+90/100 berhasil
+91/100 berhasil
+92/100 berhasil
+93/100 berhasil
+94/100 berhasil
+95/100 berhasil
+96/100 berhasil
+97/100 berhasil
+98/100 berhasil
+99/100 berhasil
+100/100 berhasil
+
+Total berita Finance berhasil: 100</pre></details></section><section id="langkah-12"><h2>Menggabungkan Data Sport dan Finance<a class="headerlink" href="#langkah-12" title="Link to this heading">#</a></h2><p>Menggabungkan hasil scraping kedua kategori menjadi satu DataFrame, menambahkan kolom ID, lalu melihat contoh data.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Gabungkan data Sport dan Finance
+data_semua = data_sport + data_finance
+
+# Buat DataFrame
+df = pd.DataFrame(data_semua)
+
+# Tambahkan ID dari 1 sampai 200
+df.insert(0, "id", range(1, len(df) + 1))
+
+# Tampilkan informasi dataset
+print("Jumlah total data:", len(df))
+print("\nJumlah berdasarkan label:")
+print(df["label"].value_counts())
+
+# Tampilkan 5 data pertama
+display(df.head())</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah total data: 200
+
+Jumlah berdasarkan label:
+label
+sport      100
+finance    100
+Name: count, dtype: int64</pre><div class="notebook-table"><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>id</th>
+<th>isi_berita</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>1</td>
+<td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+<td>sport</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2</td>
+<td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+<td>sport</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3</td>
+<td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+<td>sport</td>
+</tr>
+<tr>
+<th>3</th>
+<td>4</td>
+<td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+<td>sport</td>
+</tr>
+<tr>
+<th>4</th>
+<td>5</td>
+<td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+<td>sport</td>
+</tr>
+</tbody>
+</table>
+</div></div><details><summary>Output teks</summary><pre>   id                                         isi_berita  label
+0   1  Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...  sport
+1   2  Dalam dua seri terakhir MotoGP 2027, Marc Marq...  sport
+2   3  Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...  sport
+3   4  Di tengah viral insiden cepirit pada ajang Hyr...  sport
+4   5  Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...  sport</pre></details></details></section><section id="langkah-13"><h2>Menyimpan Dataset ke CSV<a class="headerlink" href="#langkah-13" title="Link to this heading">#</a></h2><p>Menyimpan hasil penggabungan ke file dataset_detik.csv dengan pemisah titik koma dan encoding utf-8-sig.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df.to_csv(
+    "dataset_detik.csv",
+    index=False,
+    sep=";",
+    encoding="utf-8-sig"
+)
+
+print("Dataset berhasil disimpan sebagai dataset_detik.csv")</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Dataset berhasil disimpan sebagai dataset_detik.csv</pre></details></section><section id="langkah-14"><h2>Memeriksa Dataset Akhir<a class="headerlink" href="#langkah-14" title="Link to this heading">#</a></h2><p>Memeriksa jumlah baris dan kolom, nilai kosong, serta distribusi label pada dataset.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>print("Jumlah baris:", len(df))
+print("Jumlah kolom:", len(df.columns))
+print("\nData kosong:")
+print(df.isnull().sum())
+
+print("\nDistribusi label:")
+print(df["label"].value_counts())</pre></div></div><details class="notebook-output" open=""><summary>Output notebook</summary><pre class="output-text">Jumlah baris: 200
+Jumlah kolom: 3
+
+Data kosong:
+id            0
+isi_berita    0
+label         0
+dtype: int64
+
+Distribusi label:
+label
+sport      100
+finance    100
+Name: count, dtype: int64</pre></details></section><section id="catatan-dataset"><h2>Catatan Dataset<a class="headerlink" href="#catatan-dataset" title="Link to this heading">#</a></h2><p>Notebook menyimpan dataset akhir sebagai <code>dataset_detik.csv</code>. Kolom yang dibentuk adalah <code>id</code>, <code>isi_berita</code>, dan <code>label</code>. Output notebook menunjukkan 200 baris (100 Sport dan 100 Finance) pada hasil run yang tersimpan di notebook; hasil eksekusi baru dapat berbeda jika ada URL yang gagal diambil.</p></section></section><script type="text/x-thebe-config">
     {
         requestKernel: true,
         binderOptions: {
@@ -431,93 +820,57 @@ print(&quot;Total berita berhasil di crawling: &quot;, len(news_items))</pre></d
         },
         predefinedOutput: true
     }
-    </script>
-    <script>kernelName = 'python3'</script>
-
-                </article>
-
-
-
-
-
-
-                <footer class="prev-next-footer">
-
+    </script><script>kernelName = 'python3'</script></article>
+<footer class="prev-next-footer">
 <div class="prev-next-area">
-    <a class="left-prev" href="intro.html" title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome to my Jupyter Book</p>
-      </div>
-    </a>
+<a class="left-prev" href="intro.html" title="previous page">
+<i class="fa-solid fa-angle-left"></i>
+<div class="prev-next-info">
+<p class="prev-next-subtitle">previous</p>
+<p class="prev-next-title">Welcome to my Jupyter Book</p>
 </div>
-                </footer>
-
-            </div>
-
-
-
-                <div class="bd-sidebar-secondary bd-toc">
-                <div class="sidebar-secondary-items sidebar-secondary__inner">
-                  <div class="sidebar-secondary-item">
-                    <div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
-                    <nav class="bd-toc-nav page-toc">
-                      <ul class="visible nav section-nav flex-column">
-                        <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita">Crawling Berita</a></li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-              </div>
-
-
-          </div>
-          <footer class="bd-footer-content">
-
+</a>
+</div>
+</footer>
+</div>
+<div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+<div class="sidebar-secondary-item">
+<div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
+<nav class="bd-toc-nav page-toc">
+<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1">Instalasi Library</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2">Import Library</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3">Mengakses Halaman Sport Detik</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4">Membaca Struktur HTML Halaman Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5">Menelusuri Link dari Halaman Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-6">Memfilter Link Artikel Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-7">Crawling 100 Link Artikel Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-8">Scraping Isi Berita Sport</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-9">Memeriksa Halaman Finance Detik</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-10">Crawling 100 Link Artikel Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-11">Scraping Isi Berita Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-12">Menggabungkan Data Sport dan Finance</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-13">Menyimpan Dataset ke CSV</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-14">Memeriksa Dataset Akhir</a></li></ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<footer class="bd-footer-content">
 <div class="bd-footer-content__inner container">
-
-  <div class="footer-item">
-
+<div class="footer-item">
 <p class="component-author">
 By The Jupyter Book Community
 </p>
-
-  </div>
-
-  <div class="footer-item">
-
-
-  <p class="copyright">
+</div>
+<div class="footer-item">
+<p class="copyright">
 
       © Copyright 2023.
       <br/>
-
-  </p>
-
-  </div>
-
-  <div class="footer-item">
-
-  </div>
-
-  <div class="footer-item">
-
-  </div>
-
+</p>
 </div>
-          </footer>
-
-
-      </main>
-    </div>
-  </div>
-
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<div class="footer-item">
+</div>
+<div class="footer-item">
+</div>
+</div>
+</footer>
+</main>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
 <script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
-
-  <footer class="bd-footer">
-  </footer>
-  </body>
+<footer class="bd-footer">
+</footer>
+</body>
 </html>
