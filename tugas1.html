@@ -101,6 +101,428 @@
           title="Welcome to my Jupyter Book"
           href="intro.html">
 
+    <style>
+        body {
+            background: #f4cfc8 !important;
+        }
+
+        .bd-container,
+        .bd-container__inner,
+        .bd-main,
+        .bd-content,
+        .bd-article-container {
+            max-width: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        .bd-sidebar-primary,
+        .bd-sidebar-secondary,
+        .search-button__wrapper,
+        .bd-header,
+        .header-article,
+        .prev-next-footer,
+        .bd-footer-content,
+        .bd-footer,
+        .bd-header-article {
+            display: none !important;
+        }
+
+        .bd-article {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: none !important;
+            width: 100% !important;
+        }
+
+        #main-content {
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        #web-scraping-berita-detik {
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            background: linear-gradient(#f5d4cd 0%, #f0d3cc 100%);
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            color: #1e1e1e;
+        }
+
+        .browser-shell {
+            width: calc(100% - 24px);
+            max-width: 1460px;
+            margin: 18px auto 10px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 18px 18px 0 0;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(142, 87, 79, 0.08);
+        }
+
+        .browser-topbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 64px;
+            padding: 0 18px;
+            background: #f4f3f1;
+            border-bottom: 1px solid #d8d4d1;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            width: 95px;
+        }
+
+        .browser-dots span {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .browser-dots .red { background: #ea5f56; }
+        .browser-dots .amber { background: #f3be3f; }
+        .browser-dots .green { background: #5fc95d; }
+
+        .browser-tabs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            min-width: 180px;
+            border-radius: 10px 10px 0 0;
+            background: #e9e7e5;
+            color: #5e5e5e;
+            font-size: 12px;
+            border: 1px solid #d9d6d3;
+            border-bottom: none;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .tab.active {
+            background: #fff;
+            color: #2d2d2d;
+        }
+
+        .tab .favi {
+            width: 16px;
+            height: 16px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #7f7d7d, #3a3a3a);
+            display: inline-block;
+            position: relative;
+        }
+
+        .tab.active .favi {
+            background: linear-gradient(135deg, #4f7ae0, #5dc5ff);
+        }
+
+        .browser-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #333;
+            font-size: 20px;
+            padding: 0 8px;
+        }
+
+        .browser-page {
+            display: flex;
+            min-height: 800px;
+            background: #f4f2f1;
+            border-top: 1px solid #d8d4d1;
+        }
+
+        .browser-sidebar {
+            width: 230px;
+            background: #f4f4f4;
+            border-right: 1px solid #d6d6d6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 12px 12px;
+        }
+
+        .profile-card {
+            width: 170px;
+            background: linear-gradient(180deg, #f75a5a 0%, #ef3e4d 100%);
+            border-radius: 12px 12px 0 0;
+            padding: 14px 12px 10px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.9);
+            background: url("_static/photo.jpg") center/cover no-repeat;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .profile-meta {
+            margin-top: 18px;
+            color: rgba(255,255,255,0.88);
+            font-size: 11px;
+            display: grid;
+            gap: 7px;
+            text-align: left;
+        }
+
+        .profile-meta div {
+            border-top: 1px solid rgba(255,255,255,0.25);
+            padding-top: 7px;
+        }
+
+        .profile-meta strong {
+            font-weight: 700;
+            display: block;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .browser-main {
+            flex: 1;
+            padding: 18px 18px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: #efefef;
+        }
+
+        .top-utility {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 0 8px;
+        }
+
+        .utility-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5a5a5a;
+            font-size: 14px;
+        }
+
+        .utility-group .pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #e2e7eb;
+            font-size: 11px;
+        }
+
+        .code-card {
+            background: #faf9f8;
+            border: 1px solid #dcd7d4;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 900px;
+            margin-left: 4px;
+        }
+
+        .code-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #eceae8;
+            border-bottom: 1px solid #d7d4d1;
+            color: #3a3a3a;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .code-toolbar .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: #e6e0dd;
+            font-size: 11px;
+        }
+
+        .code-block {
+            margin: 0;
+            padding: 15px 18px 12px;
+            background: #f3f5f7;
+            color: #1c1d1f;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow: auto;
+            font-family: "Consolas", "Monaco", monospace;
+            white-space: pre-wrap;
+        }
+
+        .code-keyword { color: #b15f00; }
+        .code-func { color: #1a73d9; }
+        .code-string { color: #11875f; }
+        .code-number { color: #7d55d9; }
+
+        .summary-box {
+            background: #ece9e7;
+            border: 1px solid #d7d3d1;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #4d4d4d;
+            font-size: 12px;
+            max-width: 900px;
+            margin-left: 4px;
+        }
+
+        .summary-box strong {
+            color: #1e1e1e;
+            font-size: 13px;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 8px 0 4px;
+            color: #2e2e2e;
+        }
+
+        .result-copy {
+            color: #4b4b4b;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 900px;
+            margin-left: 4px;
+        }
+
+        .browser-right {
+            width: 270px;
+            background: #f1f1f1;
+            border-left: 1px solid #d6d6d6;
+            padding: 20px 18px;
+        }
+
+        .right-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 14px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .right-menu li {
+            border-bottom: 1px solid #dfdfdf;
+            padding-bottom: 8px;
+        }
+
+        .right-menu strong {
+            display: block;
+            color: #383838;
+            margin-bottom: 4px;
+        }
+
+        .desktop-bar {
+            height: 42px;
+            background: #f3f3f3;
+            border-top: 1px solid #d7d4d1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            color: #3c3c3c;
+            font-size: 13px;
+        }
+
+        .desktop-bar .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weather {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .weather-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b0bac6, #dfe8ef);
+            position: relative;
+        }
+
+        .weather-icon::before {
+            content: "";
+            position: absolute;
+            inset: 5px 4px auto auto;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #f9d976;
+        }
+
+        .system-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 980px) {
+            .browser-page {
+                flex-direction: column;
+            }
+
+            .browser-sidebar,
+            .browser-right {
+                width: 100%;
+                border: none;
+            }
+
+            .browser-sidebar {
+                padding-top: 12px;
+            }
+
+            .browser-right {
+                border-top: 1px solid #d6d6d6;
+            }
+        }
+    </style>
 </head>
 
 
@@ -700,272 +1122,129 @@
 
 
                         <section id="web-scraping-berita-detik">
+                            <div class="browser-shell">
+                                <div class="browser-topbar">
+                                    <div class="browser-dots">
+                                        <span class="red"></span>
+                                        <span class="amber"></span>
+                                        <span class="green"></span>
+                                    </div>
 
-                            <h1>
-                                Web Scraping Berita Detik
+                                    <div class="browser-tabs">
+                                        <div class="tab active">
+                                            <span class="favi"></span>
+                                            <span>Web Scraping Berita Detik</span>
+                                        </div>
+                                        <div class="tab">
+                                            <span class="favi"></span>
+                                            <span>WhatsApp</span>
+                                        </div>
+                                    </div>
 
-                                <a
-                                    class="headerlink"
-                                    href="#web-scraping-berita-detik"
-                                    title="Link to this heading">
-
-                                    #
-
-                                </a>
-
-                            </h1>
-
-
-                            <p>
-                                Notebook crawling berita Detik,
-                                termasuk kode dan output hasil scraping.
-                            </p>
-
-
-                            <style>
-                                .notebook-shell {
-                                    margin: 1.5rem 0;
-                                    overflow: hidden;
-                                    border: 1px solid #c8c8c8;
-                                    background: #fff;
-                                    color: #222;
-                                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-                                }
-                                .notebook-toolbar {
-                                    display: flex;
-                                    justify-content: space-between;
-                                    gap: 1rem;
-                                    padding: 0.65rem 1rem;
-                                    border-bottom: 1px solid #c8c8c8;
-                                    background: #f5f5f5;
-                                    color: #444;
-                                    font-size: 0.9rem;
-                                }
-                                .notebook-toolbar strong {
-                                    font-weight: 600;
-                                }
-                                .notebook-body {
-                                    padding: 0.75rem 0;
-                                }
-                                .notebook-cell {
-                                    display: grid;
-                                    grid-template-columns: 5.5rem minmax(0, 1fr);
-                                    gap: 0.5rem;
-                                    margin: 0.5rem 0;
-                                    padding: 0.25rem 1rem;
-                                    border: 1px solid transparent;
-                                }
-                                .notebook-cell:hover {
-                                    border-color: #e5e5e5;
-                                }
-                                .notebook-prompt {
-                                    padding-top: 0.55rem;
-                                    color: #307fc1;
-                                    font-family: monospace;
-                                    font-size: 0.82rem;
-                                    text-align: right;
-                                    white-space: nowrap;
-                                }
-                                .notebook-input {
-                                    min-width: 0;
-                                    border: 1px solid #cfcfcf;
-                                    background: #f7f7f7;
-                                }
-                                .notebook-input pre,
-                                .notebook-output pre {
-                                    margin: 0;
-                                    padding: 0.5rem;
-                                    overflow-x: auto;
-                                    color: #111;
-                                    font-family: monospace;
-                                    font-size: 0.86rem;
-                                    line-height: 1.45;
-                                    white-space: pre;
-                                }
-                                .notebook-output-row {
-                                    display: grid;
-                                    grid-column: 1 / -1;
-                                    grid-template-columns: 5.5rem minmax(0, 1fr);
-                                    gap: 0.5rem;
-                                    margin-top: 0.35rem;
-                                }
-                                .notebook-output {
-                                    min-width: 0;
-                                    overflow-x: auto;
-                                }
-                                .notebook-output-prompt {
-                                    color: #d84315;
-                                    font-family: monospace;
-                                    font-size: 0.82rem;
-                                    text-align: right;
-                                }
-                                .notebook-output table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                    font-family: monospace;
-                                    font-size: 0.82rem;
-                                }
-                                .notebook-output th,
-                                .notebook-output td {
-                                    padding: 0.3rem 0.5rem;
-                                    border: 0;
-                                    border-bottom: 1px solid #ddd;
-                                    text-align: left;
-                                }
-                                .notebook-output .dataframe thead {
-                                    border-bottom: 2px solid #bbb;
-                                }
-                                .notebook-output .dataframe tbody tr:nth-child(even) {
-                                    background: #f5f5f5;
-                                }
-                                @media (max-width: 600px) {
-                                    .notebook-cell,
-                                    .notebook-output-row {
-                                        grid-template-columns: 4.5rem minmax(0, 1fr);
-                                        padding-right: 0.5rem;
-                                        padding-left: 0.5rem;
-                                    }
-                                }
-                            </style>
-
-                            <p id="notebook-status" role="status" aria-live="polite">
-                                Memuat notebook...
-                            </p>
-                            <div class="notebook-shell">
-                                <div class="notebook-toolbar">
-                                    <strong>crawling.ipynb</strong>
-                                    <span>Python 3 · Notebook</span>
+                                    <div class="browser-controls">
+                                        <span>−</span>
+                                        <span>□</span>
+                                        <span>×</span>
+                                    </div>
                                 </div>
-                                <div class="notebook-body" id="notebook-content"></div>
+
+                                <div class="browser-page">
+                                    <aside class="browser-sidebar">
+                                        <div class="profile-card">
+                                            <div class="profile-avatar"></div>
+                                            <div class="profile-name">Peneliti</div>
+                                            <div class="profile-meta">
+                                                <div>
+                                                    <strong>Penelitian dan Pembelajaran</strong>
+                                                    Web
+                                                </div>
+                                                <div>
+                                                    <strong>Pengantar Web Mining</strong>
+                                                    Crawling Web Scraping Data
+                                                </div>
+                                                <div>
+                                                    <strong>Repositori</strong>
+                                                    <span>GitHub</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </aside>
+
+                                    <main class="browser-main">
+                                        <div class="top-utility">
+                                            <div class="utility-group">
+                                                <span class="pill">↩</span>
+                                                <span class="pill">↻</span>
+                                            </div>
+                                            <div class="utility-group">
+                                                <span>https://.../tugas1.html</span>
+                                            </div>
+                                            <div class="utility-group">
+                                                <span class="pill">⚙</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="code-card">
+                                            <div class="code-toolbar">
+                                                <div class="left">
+                                                    <span>crawling.ipynb</span>
+                                                    <span class="file-tag">Python 3</span>
+                                                </div>
+                                                <span>Notebook</span>
+                                            </div>
+                                            <pre class="code-block"><span class="code-keyword">import</span> requests
+<span class="code-keyword">from</span> bs4 <span class="code-keyword">import</span> BeautifulSoup
+
+url = <span class="code-string">"https://www.detik.com"</span>
+response = requests.get(url, headers={<span class="code-string">"User-Agent"</span>: <span class="code-string">"Mozilla/5.0"</span>})
+soup = BeautifulSoup(response.text, <span class="code-string">"html.parser"</span>)
+
+news_items = soup.select(<span class="code-string">".media__title"</span>)
+<span class="code-keyword">for</span> item <span class="code-keyword">in</span> news_items[:<span class="code-number">10</span>]:
+    title = item.get_text(strip=<span class="code-keyword">True</span>)
+    <span class="code-keyword">print</span>(title)
+
+<span class="code-keyword">print</span>(<span class="code-string">"Total berita berhasil di crawling: "</span>, <span class="code-keyword">len</span>(news_items))</pre>
+                                        </div>
+
+                                        <div class="summary-box">
+                                            <strong>sort berhasil di-rawling: 100 berita</strong><br>
+                                            Finance berhasil di-rawling: 100 berita<br>
+                                            Total berita berhasil di crawling: 100 berita
+                                        </div>
+
+                                        <div class="result-title">Hasil Crawling</div>
+                                        <div class="result-copy">
+                                            Hasil crawling berhasil memperoleh 100 URL berita dan kategori sport dan finance.
+                                            Data secara otomatis disimpan dalam format JSON dan dipersiapkan untuk analisis lanjutan.
+                                        </div>
+                                    </main>
+
+                                    <aside class="browser-right">
+                                        <ul class="right-menu">
+                                            <li><strong>Contents</strong></li>
+                                            <li>Web Crawling dengan Data</li>
+                                            <li>Web Scraping Data</li>
+                                            <li>Pengumpulan URL</li>
+                                            <li>Implementasi Scraping</li>
+                                            <li>Pengolahan Dataset</li>
+                                        </ul>
+                                    </aside>
+                                </div>
+
+                                <div class="desktop-bar">
+                                    <div class="left">
+                                        <span class="weather"><span class="weather-icon"></span> 28°C</span>
+                                        <span>Mostly cloudy</span>
+                                    </div>
+                                    <div class="system-icons">
+                                        <span>⌂</span>
+                                        <span>◍</span>
+                                        <span>◉</span>
+                                        <span>◔</span>
+                                    </div>
+                                </div>
                             </div>
-
-                            <script>
-                                (async function () {
-                                    const status = document.getElementById("notebook-status");
-                                    const content = document.getElementById("notebook-content");
-
-                                    function asText(value) {
-                                        return Array.isArray(value) ? value.join("") : (value || "");
-                                    }
-
-                                    function appendOutputHtml(parent, html) {
-                                        const parsed = new DOMParser().parseFromString(html, "text/html");
-                                        const allowedTags = new Set([
-                                            "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TH", "TD", "CAPTION"
-                                        ]);
-
-                                        function copyNode(node, target) {
-                                            if (node.nodeType === Node.TEXT_NODE) {
-                                                target.appendChild(document.createTextNode(node.textContent));
-                                            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                                                if (node.tagName === "STYLE" || node.tagName === "SCRIPT") {
-                                                    return;
-                                                }
-                                                if (!allowedTags.has(node.tagName)) {
-                                                    node.childNodes.forEach(child => copyNode(child, target));
-                                                    return;
-                                                }
-                                                const safeElement = document.createElement(node.tagName.toLowerCase());
-                                                if (node.tagName === "TABLE" && node.classList.contains("dataframe")) {
-                                                    safeElement.classList.add("dataframe");
-                                                }
-                                                target.appendChild(safeElement);
-                                                node.childNodes.forEach(child => copyNode(child, safeElement));
-                                            }
-                                        }
-
-                                        parsed.body.childNodes.forEach(node => copyNode(node, parent));
-                                    }
-
-                                    try {
-                                        const response = await fetch("_sources/crawling.ipynb");
-                                        if (!response.ok) {
-                                            throw new Error(`HTTP ${response.status}`);
-                                        }
-
-                                        const notebook = await response.json();
-                                        notebook.cells.forEach((cell, index) => {
-                                            const cellElement = document.createElement("section");
-                                            cellElement.className = "notebook-cell";
-
-                                            if (cell.cell_type === "code") {
-                                                const executionCount = cell.execution_count;
-                                                const prompt = document.createElement("div");
-                                                prompt.className = "notebook-prompt";
-                                                prompt.textContent = executionCount == null
-                                                    ? "In [ ]:"
-                                                    : `In [${executionCount}]:`;
-                                                cellElement.appendChild(prompt);
-
-                                                const input = document.createElement("div");
-                                                input.className = "notebook-input";
-                                                const code = document.createElement("pre");
-                                                code.textContent = asText(cell.source);
-                                                input.appendChild(code);
-                                                cellElement.appendChild(input);
-
-                                                (cell.outputs || []).forEach(output => {
-                                                    const outputRow = document.createElement("div");
-                                                    outputRow.className = "notebook-output-row";
-                                                    const outputPrompt = document.createElement("div");
-                                                    outputPrompt.className = "notebook-output-prompt";
-                                                    const outputElement = document.createElement("div");
-                                                    outputElement.className = "notebook-output";
-                                                    const data = output.data || {};
-
-                                                    if (data["text/html"]) {
-                                                        appendOutputHtml(outputElement, asText(data["text/html"]));
-                                                    } else if (data["text/plain"]) {
-                                                        const text = document.createElement("pre");
-                                                        text.textContent = asText(data["text/plain"]);
-                                                        outputElement.appendChild(text);
-                                                    } else if (output.text) {
-                                                        const text = document.createElement("pre");
-                                                        text.textContent = asText(output.text);
-                                                        outputElement.appendChild(text);
-                                                    } else if (output.traceback) {
-                                                        const text = document.createElement("pre");
-                                                        text.textContent = output.traceback.join("\n");
-                                                        outputElement.appendChild(text);
-                                                    }
-
-                                                    if (outputElement.hasChildNodes()) {
-                                                        outputPrompt.textContent = output.output_type === "execute_result"
-                                                            ? `Out[${executionCount}]:`
-                                                            : "";
-                                                        outputRow.append(outputPrompt, outputElement);
-                                                        cellElement.appendChild(outputRow);
-                                                    }
-                                                });
-                                            } else {
-                                                const prompt = document.createElement("div");
-                                                prompt.className = "notebook-prompt";
-                                                cellElement.appendChild(prompt);
-                                                const input = document.createElement("div");
-                                                input.className = "notebook-input";
-                                                const text = document.createElement("pre");
-                                                text.textContent = asText(cell.source);
-                                                input.appendChild(text);
-                                                cellElement.appendChild(input);
-                                            }
-
-                                            content.appendChild(cellElement);
-                                        });
-
-                                        status.textContent = `${notebook.cells.length} sel notebook berhasil dimuat.`;
-                                    } catch (error) {
-                                        status.textContent = `Notebook tidak dapat dimuat: ${error.message}`;
-                                    }
-                                })();
-                            </script>
-
-                            <p>
-                                <a href="_sources/crawling.ipynb" download>
-                                    Unduh file notebook
-                                </a>
-                                jika ingin membukanya di Jupyter.
-                            </p>
-
                         </section>
 
 
