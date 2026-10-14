@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+
+<html data-content_root="./" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Preprocessing Berita Detik — Tugas 2</title>
+<script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+<!-- Loaded before other Sphinx assets -->
+<link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" rel="preload" type="font/woff2"/>
+<link href="_static/pygments.css?v=fa44fd50" rel="stylesheet" type="text/css"/>
+<link href="_static/styles/sphinx-book-theme.css?v=384b581d" rel="stylesheet" type="text/css"/>
+<link href="_static/togglebutton.css?v=13237357" rel="stylesheet" type="text/css"/>
+<link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx-thebe.css?v=4fa983c6" rel="stylesheet" type="text/css"/>
+<link href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<link as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/documentation_options.js?v=9eb32ce0"></script>
+<script src="_static/doctools.js?v=9a2dae69"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="_static/copybutton.js?v=f281be69"></script>
+<script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="_static/togglebutton.js?v=4a39c7ea"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script src="_static/design-tabs.js?v=36754332"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>DOCUMENTATION_OPTIONS.pagename = 'tugas1';</script>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="intro.html" rel="prev" title="Welcome to my Jupyter Book"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="en" name="docsearch:language"/>
+<style>
+.notebook-output{margin:1rem 0 1.5rem;border:1px solid #d8dee8;border-radius:8px;padding:.75rem 1rem;background:#f8fafc}
+.notebook-output summary{cursor:pointer;font-weight:600;margin-bottom:.5rem}
+.output-text,.notebook-output pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2f5;padding:1rem;border-radius:6px;font-size:.88rem;max-height:520px;overflow:auto}
+.notebook-table{overflow-x:auto;margin:.75rem 0}.notebook-table table{border-collapse:collapse;width:100%;font-size:.9rem}.notebook-table th,.notebook-table td{border:1px solid #d7dce2;padding:.45rem .6rem;text-align:left}.notebook-table th{background:#eef2f7}
+.bd-article section section{margin-top:1.5rem}.admonition.note{border-left:4px solid #4776a8;padding:.8rem 1rem;background:#f2f7fc;margin:1rem 0 1.5rem}
+</style></head>
+<body data-bs-root-margin="0px 0px -60%" data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-default-mode="" data-offset="180">
+<a class="skip-link" href="#main-content" id="pst-skip-link">Skip to main content</a>
+<div id="pst-scroll-pixel-helper"></div>
+<button class="btn rounded-pill" id="pst-back-to-top" type="button">
+<i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+<input class="sidebar-toggle" id="__primary" name="__primary" type="checkbox"/>
+<label class="overlay overlay-primary" for="__primary"></label>
+<input class="sidebar-toggle" id="__secondary" name="__secondary" type="checkbox"/>
+<label class="overlay overlay-secondary" for="__secondary"></label>
+<div class="search-button__wrapper">
+<div class="search-button__overlay"></div>
+<div class="search-button__search-container">
+<form action="search.html" class="bd-search d-flex align-items-center" method="get">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input aria-label="Search this book..." autocapitalize="off" autocomplete="off" autocorrect="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." spellcheck="false" type="search"/>
+<span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+</div>
+<header class="bd-header navbar navbar-expand-lg bd-navbar">
+</header>
+<div class="bd-container">
+<div class="bd-container__inner bd-page-width">
+<div class="bd-sidebar-primary bd-sidebar">
+<div class="sidebar-header-items sidebar-primary__section">
+</div>
+<div class="sidebar-primary-items__start sidebar-primary__section">
+<div class="sidebar-primary-item">
+<a class="navbar-brand logo" href="#">
+<img alt="My sample book - Home" class="logo__image only-light" src="_static/photo.jpg"/>
+<script>document.write(`<img src="_static/photo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+</a></div>
+<div class="sidebar-primary-item">
+<script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+<div class="sidebar-primary-item"><nav aria-label="Main" class="bd-links bd-docs-nav">
+<div class="bd-toc-item navbar-nav active">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
+<li class="toctree-l1">
+<a class="reference internal" href="intro.html">
+                    Welcome to my Jupyter Book
+                </a>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Preprocessing Berita Detik</a></li>
+</ul>
+</div>
+</nav></div>
+</div>
+<div class="sidebar-primary-items__end sidebar-primary__section">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<main class="bd-main" id="main-content">
+<div class="sbt-scroll-pixel-helper"></div>
+<div class="bd-content">
+<div class="bd-article-container">
+<div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+<div class="header-article-items__start">
+<div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" data-bs-placement="bottom" data-bs-toggle="tooltip" for="__primary" title="Toggle primary sidebar">
+<span class="fa-solid fa-bars"></span>
+</label></div>
+</div>
+<div class="header-article-items__end">
+<div class="header-article-item">
+<div class="article-header-buttons">
+<div class="dropdown dropdown-source-buttons">
+<button aria-expanded="false" aria-label="Source repositories" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fab fa-github"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-source-repository-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book" target="_blank" title="Source repository">
+<span class="btn__icon-container">
+<i class="fab fa-github"></i>
+</span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+<li><a class="btn btn-sm btn-source-issues-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&amp;body=Your%20issue%20content%20here." target="_blank" title="Open an issue">
+<span class="btn__icon-container">
+<i class="fas fa-lightbulb"></i>
+</span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="dropdown dropdown-download-buttons">
+<button aria-expanded="false" aria-label="Download this page" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fas fa-download"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-download-source-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="_sources/crawling.ipynb" target="_blank" title="Download source file">
+<span class="btn__icon-container">
+<i class="fas fa-file"></i>
+</span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+<li>
+<button class="btn btn-sm btn-download-pdf-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" onclick="window.print()" title="Print to PDF">
+<span class="btn__icon-container">
+<i class="fas fa-file-pdf"></i>
+</span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+</ul>
+</div>
+<button class="btn btn-sm btn-fullscreen-button" data-bs-placement="bottom" data-bs-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
+<span class="btn__icon-container">
+<i class="fas fa-expand"></i>
+</span>
+</button>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="onlyprint" id="jb-print-docs-body">
+<h1>Preprocessing Berita Detik</h1>
+<!-- Table of contents -->
+<div id="print-main-content">
+<div id="jb-print-toc">
+<ul>
+<li><a href="#web-scraping-berita-detik">Preprocessing Berita Detik</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="searchbox"></div>
+<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="preprocessing-berita-detik">
+<h1>Preprocessing dan Ekstraksi Fitur Berita</h1>
+<p>Halaman ini mengikuti isi notebook <code>Prepocessing.ipynb</code>. Tahapan yang ditampilkan mencakup membaca dataset hasil scraping, membersihkan teks berita, mengubah teks menjadi fitur TF-IDF, menyimpan hasil fitur, lalu melakukan reduksi dimensi menggunakan PCA dan menampilkan visualisasinya.</p>
+<div class="admonition note"><p class="admonition-title">Ringkasan hasil notebook</p><p>Dataset awal berisi 200 berita dengan 3 kolom. Setelah preprocessing, teks diubah menjadi fitur TF-IDF dengan 5.068 kata/fitur unik. PCA menggunakan 138 komponen dan menghasilkan data berukuran 200 baris × 140 kolom (termasuk ID dan label), dengan total explained variance sekitar 0,9007.</p></div>
+<section id="langkah-1"><h2>Import Library<a class="headerlink" href="#langkah-1" title="Link to this heading">#</a></h2><p>Mengimpor Pandas untuk pengolahan data, regex untuk pembersihan teks, NLTK untuk stopword, serta Sastrawi untuk stemming Bahasa Indonesia.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import re
+import nltk
+
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+from nltk.corpus import stopwords
+
+print(&quot;Library berhasil di-import!&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Library berhasil di-import!</pre></details></section><section id="langkah-2"><h2>Membaca Dataset Berita<a class="headerlink" href="#langkah-2" title="Link to this heading">#</a></h2><p>Membaca dataset hasil scraping dari file `dataset_detik.csv` dengan pemisah titik koma dan encoding UTF-8.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(
+    &quot;dataset_detik.csv&quot;,
+    sep=&quot;;&quot;,
+    encoding=&quot;utf-8-sig&quot;
+)
+
+print(&quot;Dataset berhasil dibaca!&quot;)
+print(&quot;Jumlah data:&quot;, len(df))
+print(&quot;Jumlah kolom:&quot;, len(df.columns))
+
+display(df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Dataset berhasil dibaca!
+Jumlah data: 200
+Jumlah kolom: 3
+
+id                                         isi_berita  label
+0   1  Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...  sport
+1   2  Dalam dua seri terakhir MotoGP 2027, Marc Marq...  sport
+2   3  Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...  sport
+3   4  Di tengah viral insiden cepirit pada ajang Hyr...  sport
+4   5  Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...  sport</pre></details></section><section id="langkah-3"><h2>Melihat Contoh Data Awal<a class="headerlink" href="#langkah-3" title="Link to this heading">#</a></h2><p>Memeriksa contoh isi berita, panjang teks, serta jumlah data pada masing-masing label.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>print(&quot;Contoh berita sebelum preprocessing:\n&quot;)
+print(df[&quot;isi_berita&quot;].iloc[0])
+
+print(&quot;\nPanjang teks berita pertama:&quot;)
+print(len(df[&quot;isi_berita&quot;].iloc[0]))
+
+print(&quot;\nDistribusi label:&quot;)
+print(df[&quot;label&quot;].value_counts())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Contoh berita sebelum preprocessing:
+
+Ciamis - Sebanyak 549 siswa dari 40 SD mengikuti lomba olahraga tradisional di Ciamis, Jawa Barat, dengan penuh semangat.
+Sejumlah peserta beradu cepat dalam lomba olahraga tradisional (Oltrad) egrang di Lapang Cigorowong, Kabupaten Ciamis, Jawa Barat, Rabu (16/9/2026). Para siswa beradu kemampuan dalam lima cabang olahraga tradisional, yakni hadang, terompah panjang, dagongan, sumpitan, dan egrang. Setiap pertandingan menghadirkan keseruan sekaligus mengajak peserta mengenal permainan tradisional. ANTARA FOTO/Adeng Bustomi
+Salah satu perlombaan yang menarik perhatian adalah dagongan. Dalam pertandingan tersebut, peserta saling mendorong batang bambu dengan mengandalkan kekuatan, keseimbangan, dan kerja sama tim. ANTARA FOTO/Adeng Bustomi
+Kejuaraan olahraga tradisional tersebut menjadi sarana edukasi bagi siswa sekaligus bagian dari upaya melestarikan budaya. Melalui kegiatan ini, olahraga tradisional dikenalkan kepada generasi muda agar tetap dimainkan dan tidak hilang di tengah perkembangan zaman. ANTARA FOTO/Adeng Bustomi
+
+Panjang teks berita pertama:
+1040
+
+Distribusi label:
+label
+sport      100
+finance    100
+Name: count, dtype: int64</pre></details></section><section id="langkah-4"><h2>Mengunduh Stopword Bahasa Indonesia<a class="headerlink" href="#langkah-4" title="Link to this heading">#</a></h2><p>Mengunduh daftar stopword NLTK yang digunakan dalam tahap penghapusan kata umum.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>nltk.download(&quot;stopwords&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\LENOVO\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+
+True</pre></details></section><section id="langkah-5"><h2>Menyiapkan Stopword dan Stemmer<a class="headerlink" href="#langkah-5" title="Link to this heading">#</a></h2><p>Membuat daftar stopword Bahasa Indonesia dan menyiapkan stemmer dari Sastrawi.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>stop_words = set(stopwords.words(&quot;indonesian&quot;))
+
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
+
+print(&quot;Jumlah stopword:&quot;, len(stop_words))
+print(&quot;Stemmer Bahasa Indonesia berhasil dibuat!&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah stopword: 757
+Stemmer Bahasa Indonesia berhasil dibuat!</pre></details></section><section id="langkah-6"><h2>Membuat Fungsi Preprocessing<a class="headerlink" href="#langkah-6" title="Link to this heading">#</a></h2><p>Mendefinisikan tahapan pembersihan: case folding, menghapus URL/angka/tanda baca, merapikan spasi, tokenisasi, stopword removal, dan stemming.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># membuat Fungsi Prepocessing
+def preprocessing_teks(teks):
+    # 1. Case folding
+    teks = teks.lower()
+
+    # 2. Menghapus URL
+    teks = re.sub(r&quot;http\S+|www\S+&quot;, &quot;&quot;, teks)
+
+    # 3. Menghapus angka
+    teks = re.sub(r&quot;\d+&quot;, &quot;&quot;, teks)
+
+    # 4. Menghapus tanda baca dan karakter khusus
+    teks = re.sub(r&quot;[^a-zA-Z\s]&quot;, &quot; &quot;, teks)
+
+    # 5. Menghapus spasi berlebih
+    teks = re.sub(r&quot;\s+&quot;, &quot; &quot;, teks).strip()
+
+    # 6. Tokenisasi sederhana
+    tokens = teks.split()
+
+    # 7. Stopword removal
+    tokens = [kata for kata in tokens if kata not in stop_words]
+
+    # 8. Stemming Bahasa Indonesia
+    tokens = [stemmer.stem(kata) for kata in tokens]
+
+    # Menggabungkan kembali menjadi teks
+    return &quot; &quot;.join(tokens)
+
+
+print(&quot;Fungsi preprocessing berhasil dibuat!&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Fungsi preprocessing berhasil dibuat!</pre></details></section><section id="langkah-7"><h2>Menerapkan Preprocessing<a class="headerlink" href="#langkah-7" title="Link to this heading">#</a></h2><p>Menerapkan fungsi preprocessing ke seluruh isi berita dan menyimpan hasilnya pada kolom `teks_preprocessed`.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df[&quot;teks_preprocessed&quot;] = df[&quot;isi_berita&quot;].apply(preprocessing_teks)
+
+print(&quot;Preprocessing selesai!&quot;)
+display(df[[&quot;id&quot;, &quot;isi_berita&quot;, &quot;teks_preprocessed&quot;, &quot;label&quot;]].head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Preprocessing selesai!
+
+id                                         isi_berita  \
+0   1  Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...   
+1   2  Dalam dua seri terakhir MotoGP 2027, Marc Marq...   
+2   3  Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...   
+3   4  Di tengah viral insiden cepirit pada ajang Hyr...   
+4   5  Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...   
+
+                                   teks_preprocessed  label  
+0  ciamis siswa sd ikut lomba olahraga tradisiona...  sport  
+1  seri motogp marc marquez sukses sapu bersih po...  sport  
+2  alwi farhan moh zaki ubaidillah muhamad yusuf ...  sport  
+3  viral insiden cepirit ajang hyrox atlet malays...  sport  
+4  dejan fedinansyah felisha alberta nathaniel pa...  sport</pre></details></section><section id="langkah-8"><h2>Mengubah Teks Menjadi TF-IDF<a class="headerlink" href="#langkah-8" title="Link to this heading">#</a></h2><p>Menggunakan `TfidfVectorizer` untuk mengubah teks yang sudah dibersihkan menjadi representasi numerik berbasis bobot TF-IDF.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Ektrak Kata Unik
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Membuat objek TF-IDF
+vectorizer = TfidfVectorizer()
+
+# Mengubah teks hasil preprocessing menjadi matriks TF-IDF
+tfidf_matrix = vectorizer.fit_transform(df[&quot;teks_preprocessed&quot;])
+
+print(&quot;TF-IDF berhasil dibuat!&quot;)
+print(&quot;Jumlah dokumen :&quot;, tfidf_matrix.shape[0])
+print(&quot;Jumlah fitur/kata unik :&quot;, tfidf_matrix.shape[1])</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">TF-IDF berhasil dibuat!
+Jumlah dokumen : 200
+Jumlah fitur/kata unik : 5068</pre></details></section><section id="langkah-9"><h2>Membentuk DataFrame TF-IDF<a class="headerlink" href="#langkah-9" title="Link to this heading">#</a></h2><p>Mengubah matriks TF-IDF menjadi DataFrame, lalu menambahkan kembali kolom ID dan label.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Mengubah matriks TF-IDF menjadi array dense (dipakai juga untuk PCA)
+tfidf_dense = tfidf_matrix.toarray()
+
+# Nama kolom kata. Kata &quot;id&quot; / &quot;label&quot; diberi awalan supaya tidak bentrok
+# dengan kolom &quot;id&quot; dan &quot;label&quot; milik dataset.
+nama_kata = [
+    f&quot;kata_{k}&quot; if k in (&quot;id&quot;, &quot;label&quot;) else k
+    for k in vectorizer.get_feature_names_out()
+]
+
+# Mengubah matriks TF-IDF menjadi DataFrame
+tfidf_df = pd.DataFrame(tfidf_dense, columns=nama_kata)
+
+# Menambahkan ID dan label
+tfidf_df = pd.concat([
+    df[[&quot;id&quot;]].reset_index(drop=True),
+    tfidf_df.reset_index(drop=True),
+    df[[&quot;label&quot;]].reset_index(drop=True)
+], axis=1)
+
+# Pastikan tidak ada nama kolom ganda
+assert tfidf_df.columns.is_unique, &quot;Ada nama kolom ganda di tfidf_df!&quot;
+
+# Menampilkan hasil TF-IDF
+display(tfidf_df)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">id       aaa  aau   ab  abad     abadi      abai  abal  abdullah  \
+0      1  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+1      2  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+2      3  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+3      4  0.000000  0.0  0.0   0.0  0.000000  0.053127   0.0       0.0   
+4      5  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+..   ...       ...  ...  ...   ...       ...       ...   ...       ...   
+195  196  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+196  197  0.000000  0.0  0.0   0.0  0.074463  0.000000   0.0       0.0   
+197  198  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+198  199  0.047257  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+199  200  0.000000  0.0  0.0   0.0  0.000000  0.000000   0.0       0.0   
+
+     abdurrahkman  ...  zein  zen   zg  zhejiang  zheng  zhestkova  zhulkifli  \
+0             0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+1             0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+2             0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+3             0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+4             0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+..            ...  ...   ...  ...  ...       ...    ...        ...        ...   
+195           0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+196           0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+197           0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+198           0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+199           0.0  ...   0.0  0.0  0.0       0.0    0.0        0.0        0.0   
+
+     zona  zverev    label  
+0     0.0     0.0    sport  
+1     0.0     0.0    sport  
+2     0.0     0.0    sport  
+3     0.0     0.0    sport  
+4     0.0     0.0    sport  
+..    ...     ...      ...  
+195   0.0     0.0  finance  
+196   0.0     0.0  finance  
+197   0.0     0.0  finance  
+198   0.0     0.0  finance  
+199   0.0     0.0  finance  
+
+[200 rows x 5070 columns]</pre></details></section><section id="langkah-10"><h2>Membuat Fungsi Penyimpanan CSV<a class="headerlink" href="#langkah-10" title="Link to this heading">#</a></h2><p>Membuat fungsi untuk menyimpan DataFrame sebagai CSV dan menyediakan tautan unduh jika dijalankan di Jupyter lokal.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Fungsi untuk menyimpan DataFrame ke CSV lalu mengunduhnya
+import os
+from IPython.display import FileLink, display
+
+def simpan_dan_unduh(dataframe, nama_file):
+    &quot;&quot;&quot;Simpan DataFrame ke CSV, lalu unduh.
+    - Google Colab : file langsung terunduh ke komputer.
+    - Jupyter lokal: file tersimpan di folder notebook + muncul link file.
+    &quot;&quot;&quot;
+    dataframe.to_csv(nama_file, index=False, encoding=&quot;utf-8-sig&quot;)
+    ukuran_kb = os.path.getsize(nama_file) / 1024
+    print(f&quot;Tersimpan: {nama_file} &quot;
+          f&quot;({dataframe.shape[0]} baris x {dataframe.shape[1]} kolom, {ukuran_kb:,.0f} KB)&quot;)
+
+    try:
+        from google.colab import files      # hanya tersedia di Google Colab
+        files.download(nama_file)
+    except ImportError:
+        display(FileLink(nama_file))        # Jupyter lokal</pre></div></div></section><section id="langkah-11"><h2>Menyimpan Hasil TF-IDF<a class="headerlink" href="#langkah-11" title="Link to this heading">#</a></h2><p>Menyimpan matriks TF-IDF ke file `hasil_tfidf.csv` sebelum proses PCA.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Menyimpan &amp; mengunduh data SEBELUM PCA (matriks TF-IDF)
+simpan_dan_unduh(tfidf_df, &quot;hasil_tfidf.csv&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Tersimpan: hasil_tfidf.csv (200 baris x 5070 kolom, 4,342 KB)
+
+D:\PPW\hasil_tfidf.csv</pre></details></section><section id="langkah-12"><h2>Memeriksa Kata Unik<a class="headerlink" href="#langkah-12" title="Link to this heading">#</a></h2><p>Menampilkan jumlah kata unik yang ditemukan oleh TF-IDF dan sebagian daftar katanya.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>fitur_kata = vectorizer.get_feature_names_out()
+
+print(&quot;Jumlah seluruh kata unik:&quot;, len(fitur_kata))
+print(fitur_kata[:200])</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah seluruh kata unik: 5068
+[&#x27;aaa&#x27; &#x27;aau&#x27; &#x27;ab&#x27; &#x27;abad&#x27; &#x27;abadi&#x27; &#x27;abai&#x27; &#x27;abal&#x27; &#x27;abdullah&#x27; &#x27;abdurrahkman&#x27;
+ &#x27;abet&#x27; &#x27;abha&#x27; &#x27;abraham&#x27; &#x27;abrahham&#x27; &#x27;absen&#x27; &#x27;absorber&#x27; &#x27;abu&#x27; &#x27;academy&#x27;
+ &#x27;acara&#x27; &#x27;accelerating&#x27; &#x27;acceptance&#x27; &#x27;access&#x27; &#x27;accessories&#x27; &#x27;accident&#x27;
+ &#x27;accreditation&#x27; &#x27;acd&#x27; &#x27;ace&#x27; &#x27;aceh&#x27; &#x27;achadie&#x27; &#x27;achilles&#x27; &#x27;achmad&#x27; &#x27;acosta&#x27;
+ &#x27;acu&#x27; &#x27;ada&#x27; &#x27;adam&#x27; &#x27;adaptasi&#x27; &#x27;adaptif&#x27; &#x27;adb&#x27; &#x27;adcp&#x27; &#x27;ade&#x27; &#x27;adelaide&#x27;
+ &#x27;adelguer&#x27; &#x27;adella&#x27; &#x27;adeng&#x27; &#x27;adhang&#x27; &#x27;adhi&#x27; &#x27;adhipramana&#x27; &#x27;adhitama&#x27;
+ &#x27;adi&#x27; &#x27;adibha&#x27; &#x27;adik&#x27; &#x27;adil&#x27; &#x27;adinata&#x27; &#x27;aditya&#x27; &#x27;administrasi&#x27;
+ &#x27;administratif&#x27; &#x27;administrator&#x27; &#x27;adp&#x27; &#x27;adr&#x27; &#x27;adrenalin&#x27; &#x27;adrian&#x27;
+ &#x27;adrianto&#x27; &#x27;adshila&#x27; &#x27;adu&#x27; &#x27;aduh&#x27; &#x27;adventure&#x27; &#x27;aerox&#x27; &#x27;afc&#x27; &#x27;aff&#x27;
+ &#x27;afiliasi&#x27; &#x27;afirmasi&#x27; &#x27;agam&#x27; &#x27;agen&#x27; &#x27;agenda&#x27; &#x27;agius&#x27; &#x27;agraria&#x27;
+ &#x27;agreement&#x27; &#x27;agresif&#x27; &#x27;agribisnis&#x27; &#x27;agung&#x27; &#x27;agus&#x27; &#x27;agusman&#x27; &#x27;agustus&#x27;
+ &#x27;ahhn&#x27; &#x27;ahi&#x27; &#x27;ahli&#x27; &#x27;ahmad&#x27; &#x27;ahren&#x27; &#x27;ahy&#x27; &#x27;ahza&#x27; &#x27;ai&#x27; &#x27;aichi&#x27; &#x27;ailsie&#x27;
+ &#x27;ain&#x27; &#x27;air&#x27; &#x27;aira&#x27; &#x27;airport&#x27; &#x27;aja&#x27; &#x27;ajaib&#x27; &#x27;ajak&#x27; &#x27;ajang&#x27; &#x27;ajar&#x27; &#x27;ajeng&#x27;
+ &#x27;aji&#x27; &#x27;aju&#x27; &#x27;akademi&#x27; &#x27;akademik&#x27; &#x27;akademisi&#x27; &#x27;akal&#x27; &#x27;akar&#x27; &#x27;akd&#x27; &#x27;akhir&#x27;
+ &#x27;akhmad&#x27; &#x27;akibat&#x27; &#x27;akn&#x27; &#x27;akomodasi&#x27; &#x27;akrab&#x27; &#x27;akreditasi&#x27; &#x27;akselerasi&#x27;
+ &#x27;akses&#x27; &#x27;aksi&#x27; &#x27;aktif&#x27; &#x27;aktivasi&#x27; &#x27;aktivitas&#x27; &#x27;aku&#x27; &#x27;akuisisi&#x27;
+ &#x27;akumulasi&#x27; &#x27;akun&#x27; &#x27;akurasi&#x27; &#x27;akurat&#x27; &#x27;al&#x27; &#x27;alam&#x27; &#x27;alamat&#x27; &#x27;alami&#x27;
+ &#x27;alamnsa&#x27; &#x27;alas&#x27; &#x27;alat&#x27; &#x27;alberta&#x27; &#x27;albon&#x27; &#x27;alcaraz&#x27; &#x27;aldeguer&#x27; &#x27;aldi&#x27;
+ &#x27;aldrich&#x27; &#x27;ales&#x27; &#x27;alex&#x27; &#x27;alexander&#x27; &#x27;alfagift&#x27; &#x27;alfamart&#x27; &#x27;alfarisi&#x27;
+ &#x27;alfarraz&#x27; &#x27;alfian&#x27; &#x27;alfons&#x27; &#x27;algibran&#x27; &#x27;alhadar&#x27; &#x27;alhamdulillah&#x27;
+ &#x27;alhasil&#x27; &#x27;ali&#x27; &#x27;alias&#x27; &#x27;alien&#x27; &#x27;alih&#x27; &#x27;alimov&#x27; &#x27;alir&#x27; &#x27;alison&#x27; &#x27;alkali&#x27;
+ &#x27;all&#x27; &#x27;allessya&#x27; &#x27;almansa&#x27; &#x27;almarwani&#x27; &#x27;alokasi&#x27; &#x27;alonso&#x27; &#x27;alpha&#x27;
+ &#x27;alpine&#x27; &#x27;alsuwailem&#x27; &#x27;alternatif&#x27; &#x27;alti&#x27; &#x27;altrec&#x27; &#x27;alumni&#x27; &#x27;alun&#x27; &#x27;alur&#x27;
+ &#x27;alvaro&#x27; &#x27;alwi&#x27; &#x27;am&#x27; &#x27;aman&#x27; &#x27;amanah&#x27; &#x27;amanat&#x27; &#x27;amarah&#x27; &#x27;amat&#x27; &#x27;amateur&#x27;
+ &#x27;ambang&#x27; &#x27;ambassador&#x27; &#x27;ambil&#x27; &#x27;ambisi&#x27; &#x27;amerika&#x27; &#x27;amg&#x27; &#x27;amin&#x27; &#x27;aminuddin&#x27;
+ &#x27;amman&#x27; &#x27;amplitude&#x27; &#x27;amran&#x27; &#x27;amri&#x27; &#x27;an&#x27;]</pre></details></section><section id="langkah-13"><h2>Reduksi Dimensi dengan PCA<a class="headerlink" href="#langkah-13" title="Link to this heading">#</a></h2><p>Menggunakan PCA dengan 138 komponen untuk mengurangi dimensi fitur TF-IDF sambil mempertahankan sebagian besar informasi.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.decomposition import PCA
+
+# PCA dengan tepat 138 komponen
+# 200 dokumen -&gt; 200 baris, 138 komponen -&gt; 138 kolom PCA
+pca = PCA(n_components=138)
+tfidf_pca = pca.fit_transform(tfidf_dense)
+
+print(&quot;PCA berhasil dilakukan!&quot;)
+print(&quot;Ukuran data sebelum PCA :&quot;, tfidf_dense.shape)
+print(&quot;Ukuran data setelah PCA :&quot;, tfidf_pca.shape)
+print(&quot;\nJumlah komponen PCA :&quot;, pca.n_components_)
+print(&quot;\nTotal Explained Variance:&quot;)
+print(pca.explained_variance_ratio_.sum())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">PCA berhasil dilakukan!
+Ukuran data sebelum PCA : (200, 5068)
+Ukuran data setelah PCA : (200, 138)
+
+Jumlah komponen PCA : 138
+
+Total Explained Variance:
+0.9006656356057265</pre></details></section><section id="langkah-14"><h2>Membentuk DataFrame Hasil PCA<a class="headerlink" href="#langkah-14" title="Link to this heading">#</a></h2><p>Membentuk DataFrame dari hasil PCA, kemudian menambahkan kolom ID dan label.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Membuat DataFrame hasil PCA
+pca_columns = [f&quot;PC{i+1}&quot; for i in range(tfidf_pca.shape[1])]
+df_pca = pd.DataFrame(tfidf_pca, columns=pca_columns)
+
+# Menambahkan id di awal dan label di akhir
+df_pca.insert(0, &quot;id&quot;, df[&quot;id&quot;].values)
+df_pca[&quot;label&quot;] = df[&quot;label&quot;].values
+
+print(&quot;Data hasil PCA:&quot;)
+print(&quot;Ukuran data PCA :&quot;, df_pca.shape)
+display(df_pca.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Data hasil PCA:
+Ukuran data PCA : (200, 140)
+
+id       PC1       PC2       PC3       PC4       PC5       PC6       PC7  \
+0   1 -0.051591 -0.084691 -0.007764 -0.034387 -0.033033 -0.074662  0.079820   
+1   2  0.476904  0.043411  0.005327  0.017750 -0.247570  0.137023 -0.096207   
+2   3 -0.090811 -0.309354 -0.131577  0.285930  0.111117  0.079826 -0.117351   
+3   4 -0.035140 -0.060473 -0.015913 -0.041771 -0.019447 -0.021548  0.018285   
+4   5 -0.096657 -0.327272 -0.142540  0.328643  0.143831  0.153140 -0.159294   
+
+        PC8       PC9  ...     PC130     PC131     PC132     PC133     PC134  \
+0 -0.074714  0.011044  ... -0.003693 -0.018177  0.013615  0.005408 -0.005205   
+1 -0.046649 -0.068151  ...  0.101996  0.034978  0.085014  0.063849 -0.089466   
+2 -0.028175 -0.077481  ... -0.079538  0.032920  0.021651 -0.018413 -0.052655   
+3 -0.021832  0.069742  ... -0.041165  0.009338 -0.055202 -0.027958 -0.000241   
+4  0.077913 -0.043123  ...  0.006965 -0.002127 -0.001126  0.043198 -0.052112   
+
+      PC135     PC136     PC137     PC138  label  
+0  0.012910 -0.018513 -0.004313 -0.010166  sport  
+1 -0.087056 -0.032035 -0.011615 -0.071770  sport  
+2  0.000821  0.049882 -0.058254 -0.062612  sport  
+3  0.066170  0.082378 -0.001000  0.073663  sport  
+4 -0.007570 -0.002406 -0.039404  0.019943  sport  
+
+[5 rows x 140 columns]</pre></details></section><section id="langkah-15"><h2>Menyimpan Hasil PCA<a class="headerlink" href="#langkah-15" title="Link to this heading">#</a></h2><p>Menyimpan hasil reduksi dimensi ke file `hasil_pca.csv`.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Menyimpan &amp; mengunduh data SETELAH PCA
+simpan_dan_unduh(df_pca, &quot;hasil_pca.csv&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Tersimpan: hasil_pca.csv (200 baris x 140 kolom, 567 KB)
+
+D:\PPW\hasil_pca.csv</pre></details></section><section id="langkah-16"><h2>Visualisasi Hasil PCA<a class="headerlink" href="#langkah-16" title="Link to this heading">#</a></h2><p>Membuat scatter plot dua komponen pertama (PC1 dan PC2) untuk melihat sebaran data berdasarkan label.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 7))
+
+for label in df_pca[&quot;label&quot;].unique():
+    data = df_pca[df_pca[&quot;label&quot;] == label]
+
+    plt.scatter(
+        data[&quot;PC1&quot;],
+        data[&quot;PC2&quot;],
+        label=label,
+        alpha=0.7
+    )
+
+plt.title(&quot;Visualisasi PCA pada Data TF-IDF&quot;)
+plt.xlabel(&quot;Principal Component 1 (PC1)&quot;)
+plt.ylabel(&quot;Principal Component 2 (PC2)&quot;)
+plt.legend()
+plt.grid(True)
+plt.show()</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">&lt;Figure size 1000x700 with 1 Axes&gt;</pre></details></section>
+</section></article>
+<footer class="prev-next-footer">
+<div class="prev-next-area">
+<a class="left-prev" href="intro.html" title="previous page">
+<i class="fa-solid fa-angle-left"></i>
+<div class="prev-next-info">
+<p class="prev-next-subtitle">previous</p>
+<p class="prev-next-title">Welcome to my Jupyter Book</p>
+</div>
+</a>
+</div>
+</footer>
+</div>
+<div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+<div class="sidebar-secondary-item">
+<div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
+<nav class="bd-toc-nav page-toc">
+<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1">Import Library</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2">Membaca Dataset Berita</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3">Melihat Contoh Data Awal</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4">Mengunduh Stopword Bahasa Indonesia</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5">Menyiapkan Stopword dan Stemmer</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-6">Membuat Fungsi Preprocessing</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-7">Menerapkan Preprocessing</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-8">Mengubah Teks Menjadi TF-IDF</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-9">Membentuk DataFrame TF-IDF</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-10">Membuat Fungsi Penyimpanan CSV</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-11">Menyimpan Hasil TF-IDF</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-12">Memeriksa Kata Unik</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-13">Reduksi Dimensi dengan PCA</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-14">Membentuk DataFrame Hasil PCA</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-15">Menyimpan Hasil PCA</a></li><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-16">Visualisasi Hasil PCA</a></li></ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<footer class="bd-footer-content">
+<div class="bd-footer-content__inner container">
+<div class="footer-item">
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+</div>
+<div class="footer-item">
+<p class="copyright">
+
+      © Copyright 2023.
+      <br/>
+</p>
+</div>
+<div class="footer-item">
+</div>
+<div class="footer-item">
+</div>
+</div>
+</footer>
+</main>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+<footer class="bd-footer">
+</footer>
+</body>
+</html>
