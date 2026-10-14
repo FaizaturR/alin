@@ -1,0 +1,966 @@
+
+<!DOCTYPE html>
+
+<html data-content_root="./" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Representasi TF-IDF dan Reduksi Dimensi Data berita</title>
+<script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+<!-- Loaded before other Sphinx assets -->
+<link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" rel="preload" type="font/woff2"/>
+<link href="_static/pygments.css?v=fa44fd50" rel="stylesheet" type="text/css"/>
+<link href="_static/styles/sphinx-book-theme.css?v=384b581d" rel="stylesheet" type="text/css"/>
+<link href="_static/togglebutton.css?v=13237357" rel="stylesheet" type="text/css"/>
+<link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx-thebe.css?v=4fa983c6" rel="stylesheet" type="text/css"/>
+<link href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<link as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" rel="preload"/>
+<script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/documentation_options.js?v=9eb32ce0"></script>
+<script src="_static/doctools.js?v=9a2dae69"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="_static/copybutton.js?v=f281be69"></script>
+<script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="_static/togglebutton.js?v=4a39c7ea"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script src="_static/design-tabs.js?v=36754332"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>DOCUMENTATION_OPTIONS.pagename = 'tugas1';</script>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="intro.html" rel="prev" title="Welcome to my Jupyter Book"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="en" name="docsearch:language"/>
+<style>
+.notebook-output{margin:1rem 0 1.5rem;border:1px solid #d8dee8;border-radius:8px;padding:.75rem 1rem;background:#f8fafc}
+.notebook-output summary{cursor:pointer;font-weight:600;margin-bottom:.5rem}
+.output-text,.notebook-output pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2f5;padding:1rem;border-radius:6px;font-size:.88rem;max-height:520px;overflow:auto}
+.notebook-table{overflow-x:auto;margin:.75rem 0}.notebook-table table{border-collapse:collapse;width:100%;font-size:.9rem}.notebook-table th,.notebook-table td{border:1px solid #d7dce2;padding:.45rem .6rem;text-align:left}.notebook-table th{background:#eef2f7}
+.bd-article section section{margin-top:1.5rem}.admonition.note{border-left:4px solid #4776a8;padding:.8rem 1rem;background:#f2f7fc;margin:1rem 0 1.5rem}
+</style></head>
+<body data-bs-root-margin="0px 0px -60%" data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-default-mode="" data-offset="180">
+<a class="skip-link" href="#main-content" id="pst-skip-link">Skip to main content</a>
+<div id="pst-scroll-pixel-helper"></div>
+<button class="btn rounded-pill" id="pst-back-to-top" type="button">
+<i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+<input class="sidebar-toggle" id="__primary" name="__primary" type="checkbox"/>
+<label class="overlay overlay-primary" for="__primary"></label>
+<input class="sidebar-toggle" id="__secondary" name="__secondary" type="checkbox"/>
+<label class="overlay overlay-secondary" for="__secondary"></label>
+<div class="search-button__wrapper">
+<div class="search-button__overlay"></div>
+<div class="search-button__search-container">
+<form action="search.html" class="bd-search d-flex align-items-center" method="get">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input aria-label="Search this book..." autocapitalize="off" autocomplete="off" autocorrect="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." spellcheck="false" type="search"/>
+<span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+</div>
+<header class="bd-header navbar navbar-expand-lg bd-navbar">
+</header>
+<div class="bd-container">
+<div class="bd-container__inner bd-page-width">
+<div class="bd-sidebar-primary bd-sidebar">
+<div class="sidebar-header-items sidebar-primary__section">
+</div>
+<div class="sidebar-primary-items__start sidebar-primary__section">
+<div class="sidebar-primary-item">
+<a class="navbar-brand logo" href="#">
+<img alt="My sample book - Home" class="logo__image only-light" src="_static/photo.jpg"/>
+<script>document.write(`<img src="_static/photo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+</a></div>
+<div class="sidebar-primary-item">
+<script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+<div class="sidebar-primary-item"><nav aria-label="Main" class="bd-links bd-docs-nav">
+<div class="bd-toc-item navbar-nav active">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
+<li class="toctree-l1">
+<a class="reference internal" href="intro.html">
+                    Welcome to my Jupyter Book
+                </a>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Representasi TF-IDF dan Reduksi Dimensi Data berita</a></li>
+</ul>
+</div>
+</nav></div>
+</div>
+<div class="sidebar-primary-items__end sidebar-primary__section">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<main class="bd-main" id="main-content">
+<div class="sbt-scroll-pixel-helper"></div>
+<div class="bd-content">
+<div class="bd-article-container">
+<div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+<div class="header-article-items__start">
+<div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" data-bs-placement="bottom" data-bs-toggle="tooltip" for="__primary" title="Toggle primary sidebar">
+<span class="fa-solid fa-bars"></span>
+</label></div>
+</div>
+<div class="header-article-items__end">
+<div class="header-article-item">
+<div class="article-header-buttons">
+<div class="dropdown dropdown-source-buttons">
+<button aria-expanded="false" aria-label="Source repositories" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fab fa-github"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-source-repository-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book" target="_blank" title="Source repository">
+<span class="btn__icon-container">
+<i class="fab fa-github"></i>
+</span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+<li><a class="btn btn-sm btn-source-issues-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&amp;body=Your%20issue%20content%20here." target="_blank" title="Open an issue">
+<span class="btn__icon-container">
+<i class="fas fa-lightbulb"></i>
+</span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="dropdown dropdown-download-buttons">
+<button aria-expanded="false" aria-label="Download this page" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+<i class="fas fa-download"></i>
+</button>
+<ul class="dropdown-menu">
+<li><a class="btn btn-sm btn-download-source-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" href="_sources/crawling.ipynb" target="_blank" title="Download source file">
+<span class="btn__icon-container">
+<i class="fas fa-file"></i>
+</span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+<li>
+<button class="btn btn-sm btn-download-pdf-button dropdown-item" data-bs-placement="left" data-bs-toggle="tooltip" onclick="window.print()" title="Print to PDF">
+<span class="btn__icon-container">
+<i class="fas fa-file-pdf"></i>
+</span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+</ul>
+</div>
+<button class="btn btn-sm btn-fullscreen-button" data-bs-placement="bottom" data-bs-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
+<span class="btn__icon-container">
+<i class="fas fa-expand"></i>
+</span>
+</button>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="onlyprint" id="jb-print-docs-body">
+<h1>Representasi TF-IDF dan Reduksi Dimensi Data berita</h1>
+<!-- Table of contents -->
+<div id="print-main-content">
+<div id="jb-print-toc">
+<ul>
+<li><a href="#web-scraping-berita-detik">Representasi TF-IDF dan Reduksi Dimensi Data berita</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="searchbox"></div>
+<article class="bd-article"><section class="tex2jax_ignore mathjax_ignore" id="representasi-tfidf-reduksi-dimensi"><h1>Representasi TF-IDF dan Reduksi Dimensi Data berita</h1><p>Konten halaman ini mengikuti notebook <code>Prepocessing_+_TF_IDF.ipynb</code>, mulai dari pemuatan dataset dan preprocessing teks, pembentukan fitur TF-IDF, reduksi dimensi menggunakan PCA, pembagian data training/testing, hingga evaluasi model Naive Bayes.</p><section id="bagian-1"><h2>Import Library<a class="headerlink" href="#bagian-1" title="Link to this heading">#</a></h2><h3>Import Library</h3></section>
+<section id="bagian-2"><h2>Langkah 2<a class="headerlink" href="#bagian-2" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import re
+import nltk
+
+from nltk.corpus import stopwords
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory</pre></div></div></section>
+<section id="bagian-3"><h2>Load Dataset<a class="headerlink" href="#bagian-3" title="Link to this heading">#</a></h2><h3>Load Dataset</h3></section>
+<section id="bagian-4"><h2>Membaca dataset<a class="headerlink" href="#bagian-4" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Membaca dataset
+df = pd.read_csv(
+    &quot;dataset_detik.csv&quot;,
+    sep=&quot;;&quot;,
+    encoding=&quot;utf-8-sig&quot;
+)
+
+# Melihat ukuran dataset
+print(&quot;Ukuran dataset:&quot;, df.shape)
+
+# Melihat 5 data pertama
+display(df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Ukuran dataset: (200, 3)</pre></details><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-5"><h2>Menyiapkan stopword dan stemming<a class="headerlink" href="#bagian-5" title="Link to this heading">#</a></h2><h3>Menyiapkan stopword dan stemming</h3></section>
+<section id="bagian-6"><h2>Download stopword Bahasa Indonesia<a class="headerlink" href="#bagian-6" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Download stopword Bahasa Indonesia
+nltk.download(&quot;stopwords&quot;)
+
+# Stopword Bahasa Indonesia
+stop_words = set(stopwords.words(&quot;indonesian&quot;))
+
+# Membuat stemmer Bahasa Indonesia
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
+
+print(&quot;Jumlah stopword:&quot;, len(stop_words))
+print(&quot;Stemmer berhasil dibuat.&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Jumlah stopword: 757
+Stemmer berhasil dibuat.</pre></details><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\LENOVO\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!</pre></details></section>
+<section id="bagian-7"><h2>Prepocessing<a class="headerlink" href="#bagian-7" title="Link to this heading">#</a></h2><h3>Prepocessing</h3></section>
+<section id="bagian-8"><h2>1. Lowercase<a class="headerlink" href="#bagian-8" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>def preprocessing(teks):
+    # 1. Lowercase
+    teks = teks.lower()
+
+    # 2. Hapus angka
+    teks = re.sub(r&quot;\d+&quot;, &quot; &quot;, teks)
+
+    # 3. Hapus tanda baca
+    teks = re.sub(r&quot;[^\w\s]&quot;, &quot; &quot;, teks)
+
+    # 4. Hapus spasi berlebih
+    teks = re.sub(r&quot;\s+&quot;, &quot; &quot;, teks).strip()
+
+    # 5. Tokenisasi
+    tokens = teks.split()
+
+    # 6. Stopword removal
+    tokens = [kata for kata in tokens if kata not in stop_words]
+
+    # 7. Stemming
+    tokens = [stemmer.stem(kata) for kata in tokens]
+
+    return tokens</pre></div></div></section>
+<section id="bagian-9"><h2>Langkah 9<a class="headerlink" href="#bagian-9" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>df[&quot;preprocessing&quot;] = df[&quot;isi_berita&quot;].apply(preprocessing)
+display(
+    df[[&quot;isi_berita&quot;, &quot;preprocessing&quot;]].head()
+)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isi_berita</th>
+      <th>preprocessing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ciamis - Sebanyak 549 siswa dari 40 SD mengiku...</td>
+      <td>[ciamis, siswa, sd, ikut, lomba, olahraga, tra...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>[seri, motogp, marc, marquez, sukses, sapu, be...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>[alwi, farhan, moh, zaki, ubaidillah, muhamad,...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>[viral, insiden, cepirit, ajang, hyrox, atlet,...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>[dejan, fedinansyah, felisha, alberta, nathani...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-10"><h2>Menggabungkan token menjadi teks<a class="headerlink" href="#bagian-10" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Menggabungkan token menjadi teks
+df[&quot;teks_tfidf&quot;] = df[&quot;preprocessing&quot;].apply(lambda x: &quot; &quot;.join(x))
+
+# Melihat hasilnya
+display(df[[&quot;preprocessing&quot;, &quot;teks_tfidf&quot;]].head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>preprocessing</th>
+      <th>teks_tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[ciamis, siswa, sd, ikut, lomba, olahraga, tra...</td>
+      <td>ciamis siswa sd ikut lomba olahraga tradisiona...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[seri, motogp, marc, marquez, sukses, sapu, be...</td>
+      <td>seri motogp marc marquez sukses sapu bersih po...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[alwi, farhan, moh, zaki, ubaidillah, muhamad,...</td>
+      <td>alwi farhan moh zaki ubaidillah muhamad yusuf ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[viral, insiden, cepirit, ajang, hyrox, atlet,...</td>
+      <td>viral insiden cepirit ajang hyrox atlet malays...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[dejan, fedinansyah, felisha, alberta, nathani...</td>
+      <td>dejan fedinansyah felisha alberta nathaniel pa...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-11"><h2>TF-IDF<a class="headerlink" href="#bagian-11" title="Link to this heading">#</a></h2><h3>TF-IDF</h3></section>
+<section id="bagian-12"><h2>Langkah 12<a class="headerlink" href="#bagian-12" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer()
+
+tfidf_matrix = vectorizer.fit_transform(df[&quot;teks_tfidf&quot;])
+print(&quot;Ukuran matriks TF-IDF:&quot;, tfidf_matrix.shape)
+
+fitur = vectorizer.get_feature_names_out()
+
+print(&quot;Jumlah fitur:&quot;, len(fitur))
+print(&quot;\n20 fitur pertama:&quot;)
+print(fitur[:20])
+
+tfidf_df = pd.DataFrame(
+    tfidf_matrix.toarray()[:5, :20],
+    columns=fitur[:20]
+)
+
+display(tfidf_df)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Ukuran matriks TF-IDF: (200, 5068)
+Jumlah fitur: 5068
+
+20 fitur pertama:
+[&#x27;aaa&#x27; &#x27;aau&#x27; &#x27;ab&#x27; &#x27;abad&#x27; &#x27;abadi&#x27; &#x27;abai&#x27; &#x27;abal&#x27; &#x27;abdullah&#x27; &#x27;abdurrahkman&#x27;
+ &#x27;abet&#x27; &#x27;abha&#x27; &#x27;abraham&#x27; &#x27;abrahham&#x27; &#x27;absen&#x27; &#x27;absorber&#x27; &#x27;abu&#x27; &#x27;academy&#x27;
+ &#x27;acara&#x27; &#x27;accelerating&#x27; &#x27;acceptance&#x27;]</pre></details><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aaa</th>
+      <th>aau</th>
+      <th>ab</th>
+      <th>abad</th>
+      <th>abadi</th>
+      <th>abai</th>
+      <th>abal</th>
+      <th>abdullah</th>
+      <th>abdurrahkman</th>
+      <th>abet</th>
+      <th>abha</th>
+      <th>abraham</th>
+      <th>abrahham</th>
+      <th>absen</th>
+      <th>absorber</th>
+      <th>abu</th>
+      <th>academy</th>
+      <th>acara</th>
+      <th>accelerating</th>
+      <th>acceptance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.053127</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></details></section>
+<section id="bagian-13"><h2>PCA<a class="headerlink" href="#bagian-13" title="Link to this heading">#</a></h2><h3>PCA</h3></section>
+<section id="bagian-14"><h2>Langkah 14<a class="headerlink" href="#bagian-14" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.decomposition import PCA
+
+tfidf_dense = tfidf_matrix.toarray()
+
+pca = PCA(n_components=138)
+
+tfidf_pca = pca.fit_transform(tfidf_dense)
+
+print(&quot;Ukuran TF-IDF:&quot;, tfidf_dense.shape)
+print(&quot;Ukuran setelah PCA:&quot;, tfidf_pca.shape)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Ukuran TF-IDF: (200, 5068)
+Ukuran setelah PCA: (200, 138)</pre></details></section>
+<section id="bagian-15"><h2>Tambahkan ID dan label<a class="headerlink" href="#bagian-15" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>kolom_pca = [f&quot;PC{i}&quot; for i in range(1, 139)]
+
+pca_df = pd.DataFrame(
+    tfidf_pca,
+    columns=kolom_pca
+)
+
+# Tambahkan ID dan label
+pca_df.insert(0, &quot;id&quot;, df[&quot;id&quot;].values)
+pca_df[&quot;label&quot;] = df[&quot;label&quot;].values
+
+display(pca_df.head())</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>PC3</th>
+      <th>PC4</th>
+      <th>PC5</th>
+      <th>PC6</th>
+      <th>PC7</th>
+      <th>PC8</th>
+      <th>PC9</th>
+      <th>...</th>
+      <th>PC130</th>
+      <th>PC131</th>
+      <th>PC132</th>
+      <th>PC133</th>
+      <th>PC134</th>
+      <th>PC135</th>
+      <th>PC136</th>
+      <th>PC137</th>
+      <th>PC138</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>-0.050952</td>
+      <td>-0.084703</td>
+      <td>-0.007794</td>
+      <td>-0.034339</td>
+      <td>-0.023694</td>
+      <td>-0.078971</td>
+      <td>0.075429</td>
+      <td>0.078444</td>
+      <td>0.011050</td>
+      <td>...</td>
+      <td>-0.011211</td>
+      <td>0.007760</td>
+      <td>0.005648</td>
+      <td>0.020389</td>
+      <td>0.000547</td>
+      <td>-0.004988</td>
+      <td>0.019916</td>
+      <td>-0.009283</td>
+      <td>-0.008958</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>0.476478</td>
+      <td>0.044079</td>
+      <td>0.005285</td>
+      <td>0.016814</td>
+      <td>-0.264675</td>
+      <td>0.114663</td>
+      <td>-0.085561</td>
+      <td>0.033572</td>
+      <td>-0.067758</td>
+      <td>...</td>
+      <td>0.206396</td>
+      <td>0.062009</td>
+      <td>0.091145</td>
+      <td>0.047115</td>
+      <td>-0.116744</td>
+      <td>-0.107697</td>
+      <td>0.019382</td>
+      <td>0.002941</td>
+      <td>0.011659</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>-0.090061</td>
+      <td>-0.309589</td>
+      <td>-0.131775</td>
+      <td>0.285862</td>
+      <td>0.097103</td>
+      <td>0.095506</td>
+      <td>-0.118527</td>
+      <td>0.024179</td>
+      <td>-0.077560</td>
+      <td>...</td>
+      <td>-0.049335</td>
+      <td>0.064887</td>
+      <td>-0.045187</td>
+      <td>0.043078</td>
+      <td>0.017153</td>
+      <td>-0.042486</td>
+      <td>-0.076526</td>
+      <td>0.104553</td>
+      <td>-0.028238</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>-0.034530</td>
+      <td>-0.060437</td>
+      <td>-0.015932</td>
+      <td>-0.041730</td>
+      <td>-0.015897</td>
+      <td>-0.024061</td>
+      <td>0.017555</td>
+      <td>0.022217</td>
+      <td>0.069687</td>
+      <td>...</td>
+      <td>-0.012649</td>
+      <td>-0.015095</td>
+      <td>-0.050254</td>
+      <td>0.057011</td>
+      <td>0.024375</td>
+      <td>0.022874</td>
+      <td>-0.029657</td>
+      <td>0.007166</td>
+      <td>0.025101</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>-0.095826</td>
+      <td>-0.327499</td>
+      <td>-0.142740</td>
+      <td>0.328621</td>
+      <td>0.123412</td>
+      <td>0.170766</td>
+      <td>-0.154857</td>
+      <td>-0.084437</td>
+      <td>-0.043177</td>
+      <td>...</td>
+      <td>-0.006882</td>
+      <td>-0.025239</td>
+      <td>-0.046904</td>
+      <td>0.015068</td>
+      <td>-0.014923</td>
+      <td>-0.102638</td>
+      <td>0.013520</td>
+      <td>-0.032371</td>
+      <td>-0.010553</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 140 columns</p>
+</div></div></details></section>
+<section id="bagian-16"><h2>Split Data<a class="headerlink" href="#bagian-16" title="Link to this heading">#</a></h2><h3>Split Data</h3></section>
+<section id="bagian-17"><h2>Langkah 17<a class="headerlink" href="#bagian-17" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+X_train_text, X_test_text, y_train, y_test = train_test_split(
+    df[&quot;teks_tfidf&quot;],
+    df[&quot;label&quot;],
+    test_size=0.2,
+    random_state=42,
+    stratify=df[&quot;label&quot;]
+)
+
+print(&quot;Data training:&quot;, len(X_train_text))
+print(&quot;Data testing :&quot;, len(X_test_text))</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Data training: 160
+Data testing : 40</pre></details></section>
+<section id="bagian-18"><h2>Langkah 18<a class="headerlink" href="#bagian-18" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>vectorizer = TfidfVectorizer()
+
+X_train_tfidf = vectorizer.fit_transform(X_train_text)
+X_test_tfidf = vectorizer.transform(X_test_text)
+
+print(&quot;Training TF-IDF:&quot;, X_train_tfidf.shape)
+print(&quot;Testing TF-IDF :&quot;, X_test_tfidf.shape)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Training TF-IDF: (160, 4512)
+Testing TF-IDF : (40, 4512)</pre></details></section>
+<section id="bagian-19"><h2>Langkah 19<a class="headerlink" href="#bagian-19" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.decomposition import PCA
+
+pca = PCA(n_components=138)
+
+X_train_pca = pca.fit_transform(X_train_tfidf.toarray())
+X_test_pca = pca.transform(X_test_tfidf.toarray())
+
+print(&quot;Training PCA:&quot;, X_train_pca.shape)
+print(&quot;Testing PCA :&quot;, X_test_pca.shape)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">Training PCA: (160, 138)
+Testing PCA : (40, 138)</pre></details></section>
+<section id="bagian-20"><h2>Naive Bayes<a class="headerlink" href="#bagian-20" title="Link to this heading">#</a></h2><h3>Naive Bayes</h3></section>
+<section id="bagian-21"><h2>Langkah 21<a class="headerlink" href="#bagian-21" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.naive_bayes import GaussianNB
+
+nb = GaussianNB()
+
+nb.fit(X_train_pca, y_train)
+
+y_pred = nb.predict(X_test_pca)</pre></div></div></section>
+<section id="bagian-22"><h2>Langkah 22<a class="headerlink" href="#bagian-22" title="Link to this heading">#</a></h2><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(
+    y_test, y_pred,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+recall = recall_score(
+    y_test, y_pred,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+f1 = f1_score(
+    y_test, y_pred,
+    average=&quot;weighted&quot;,
+    zero_division=0
+)
+
+print(&quot;HASIL TF-IDF + PCA + NAIVE BAYES&quot;)
+print(&quot;=&quot; * 45)
+print(f&quot;Accuracy  : {accuracy:.4f} ({accuracy*100:.2f}%)&quot;)
+print(f&quot;Precision : {precision:.4f} ({precision*100:.2f}%)&quot;)
+print(f&quot;Recall    : {recall:.4f} ({recall*100:.2f}%)&quot;)
+print(f&quot;F1-Score  : {f1:.4f} ({f1*100:.2f}%)&quot;)</pre></div></div><details class="notebook-output" open><summary>Output notebook</summary><pre class="output-text">HASIL TF-IDF + PCA + NAIVE BAYES
+=============================================
+Accuracy  : 0.9750 (97.50%)
+Precision : 0.9762 (97.62%)
+Recall    : 0.9750 (97.50%)
+F1-Score  : 0.9750 (97.50%)</pre></details></section></section></article>
+<footer class="prev-next-footer">
+<div class="prev-next-area">
+<a class="left-prev" href="intro.html" title="previous page">
+<i class="fa-solid fa-angle-left"></i>
+<div class="prev-next-info">
+<p class="prev-next-subtitle">previous</p>
+<p class="prev-next-title">Welcome to my Jupyter Book</p>
+</div>
+</a>
+</div>
+</footer>
+</div>
+<div class="bd-sidebar-secondary bd-toc">
+<div class="sidebar-secondary-items sidebar-secondary__inner">
+<div class="sidebar-secondary-item">
+<div class="page-toc tocsection onthispage"><i class="fa-solid fa-list"></i> Contents</div>
+<nav class="bd-toc-nav page-toc">
+<ul class="visible nav section-nav flex-column"><li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1">Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-2">Langkah 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-3">Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-4">Membaca dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-5">Menyiapkan stopword dan stemming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-6">Download stopword Bahasa Indonesia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-7">Prepocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-8">1. Lowercase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-9">Langkah 9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-10">Menggabungkan token menjadi teks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-11">TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-12">Langkah 12</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-13">PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-14">Langkah 14</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-15">Tambahkan ID dan label</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-16">Split Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-17">Langkah 17</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-18">Langkah 18</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-19">Langkah 19</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-20">Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-21">Langkah 21</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-22">Langkah 22</a></li></ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<footer class="bd-footer-content">
+<div class="bd-footer-content__inner container">
+<div class="footer-item">
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+</div>
+<div class="footer-item">
+<p class="copyright">
+
+      © Copyright 2023.
+      <br/>
+</p>
+</div>
+<div class="footer-item">
+</div>
+<div class="footer-item">
+</div>
+</div>
+</footer>
+</main>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+<footer class="bd-footer">
+</footer>
+</body>
+</html>
