@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+gensim
+scikit-learn
+Sastrawi
+nltk
+trafilatura
